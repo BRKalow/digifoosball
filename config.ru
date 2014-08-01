@@ -1,8 +1,8 @@
 require 'rubygems'
-require 'sinatra-activerecord'
 
 Bundler.require
 
+require 'sinatra/activerecord'
 require './app'
 
 set :environment, :development
