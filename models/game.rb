@@ -5,7 +5,7 @@ class Game < ActiveRecord::Base
     belongs_to :player_home, :class_name => 'User'
     belongs_to :player_away, :class_name => 'User'
 
-    after_initiliaze :set_defaults
+    after_initialize :set_defaults
 
     def set_defaults
       self.player_home_id ||= 0
