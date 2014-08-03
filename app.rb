@@ -1,3 +1,5 @@
+require 'sinatra/activerecord'
+
 set :views, File.dirname(__FILE__) + '/views'
 
 before do
@@ -5,5 +7,5 @@ before do
 end
 
 get '/' do
-   erb :index 
+   erb :index
 end
