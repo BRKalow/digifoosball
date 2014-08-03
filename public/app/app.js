@@ -1,4 +1,4 @@
-var app = angular.module('Dashboard', ['ui.bootstrap', 'ngCookies']);
+var app = angular.module('DigiFoosball', ['ui.bootstrap', 'ngCookies']);
 
 /**
  * Loading Directive
@@ -9,10 +9,10 @@ app.directive('loading', function () {
         restrict: 'AE',
         replace: 'false',
         template: '<div class="loading"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>'
-    }
+    };
 });
 
-app.controller('MasterCtrl', function($scope, $cookieStore) {
+app.controller('MainCtl', function($scope, $cookieStore) {
 
     /**
      * Sidebar Toggle & Cookie Control
@@ -28,13 +28,13 @@ app.controller('MasterCtrl', function($scope, $cookieStore) {
         {
             if(angular.isDefined($cookieStore.get('toggle')))
             {
-                if($cookieStore.get('toggle') == false)
+                if($cookieStore.get('toggle') === false)
                     $scope.toggle = false;
 
                 else
                     $scope.toggle = true;
             }
-            else 
+            else
             {
                 $scope.toggle = true;
             }
@@ -46,7 +46,7 @@ app.controller('MasterCtrl', function($scope, $cookieStore) {
 
     });
 
-    $scope.toggleSidebar = function() 
+    $scope.toggleSidebar = function()
     {
         $scope.toggle = ! $scope.toggle;
 
