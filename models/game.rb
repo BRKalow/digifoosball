@@ -1,7 +1,4 @@
 class Game < ActiveRecord::Base
-    attr_accessor :player_home, :player_away, :score_home, :score_away,
-                  :score_history
-
     belongs_to :player_home, :class_name => 'User'
     belongs_to :player_away, :class_name => 'User'
 
@@ -23,10 +20,22 @@ class Game < ActiveRecord::Base
       self.score_home >= 5 ? (self.player_home) : (self.player_away)
     end
 
+    def loser
+      self.score_home < 5 ? (self.player_home) : (self.player_away)
+    end
+
     def increment_score(team)
       team == 'home' ? (self.score_home += 1) : (self.score_away += 1)
       self.score_history == '' ? (self.score_history += team) : (self.score_history += ',' + team)
 
       self.handle_game_over if self.game_finished?
+    end
+
+    def self.handle_game_over
+      self.winner.wins += 1
+      self.winner.save
+
+      self.loser.losses += 1
+      self.loser.save
     end
 end

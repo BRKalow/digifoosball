@@ -8,5 +8,6 @@ gem 'device_cloud'
 
 group :development do
     gem 'shotgun'
-    gem 'thin'    
+    gem 'thin'
+    gem 'tux'
 end

@@ -1,5 +1,3 @@
-require 'sinatra/activerecord'
-
 set :views, File.dirname(__FILE__) + '/views'
 
 before do

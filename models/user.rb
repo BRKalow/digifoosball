@@ -1,15 +1,18 @@
 class User < ActiveRecord::Base
-    attr_accessor :name, :email, :wins, :losses, :department
+  has_many :home_games, :class_name => 'Game', :foreign_key => 'player_home_id'
+  has_many :away_games, :class_name => 'Game', :foreign_key => 'player_away_id'
 
-    has_many :games
+  after_initialize :set_defaults
 
-    after_initialize :set_defaults
+  def games
+    home_games + away_games
+  end
 
-    def set_defaults
-      self.name ||= 'John'
-      self.email ||= 'john.doe@example.com'
-      self.wins ||= 0
-      self.losses ||= 0
-      self.department ||= 'General'
-    end
+  def set_defaults
+    self.name ||= 'John'
+    self.email ||= 'john.doe@example.com'
+    self.wins ||= 0
+    self.losses ||= 0
+    self.department ||= 'General'
+  end
 end
