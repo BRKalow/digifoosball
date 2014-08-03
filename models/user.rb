@@ -15,4 +15,12 @@ class User < ActiveRecord::Base
     self.losses ||= 0
     self.department ||= 'General'
   end
+
+  def games_played
+    return self.wins + self.losses
+  end
+
+  def win_loss_percentage
+    return self.wins.fdiv self.games_played
+  end
 end

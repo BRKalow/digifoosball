@@ -8,7 +8,6 @@ class CreateGames < ActiveRecord::Migration
         t.integer   :score_home
         t.integer   :score_away
         t.string    :score_history
-        t.integer   :winner
         t.timestamps
     end
   end

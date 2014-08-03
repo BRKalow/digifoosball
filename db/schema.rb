@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140801181125) do
+ActiveRecord::Schema.define(version: 20140801181127) do
 
   create_table "games", force: true do |t|
     t.integer  "player_home_id"
     t.integer  "player_away_id"
     t.integer  "score_home"
     t.integer  "score_away"
-    t.integer  "winner"
+    t.string   "score_history"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
