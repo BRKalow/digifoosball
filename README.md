@@ -40,7 +40,7 @@ Credits
 
 Created by the Summer 2014 Digi Student Engineers team:
 
-Bryce Kalow
-Christine Karas
-Jacob Drost
-Ryan Shellberg
+* Bryce Kalow
+* Christine Karas
+* Jacob Drost
+* Ryan Shellberg
