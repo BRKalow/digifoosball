@@ -18,9 +18,13 @@ get '/api/user/:id' do
   end
 end
 
-# get '/api/game/:id' do
-#   # logic
-# end
+get '/api/game/:id' do
+  if Game.exists? params[:id]
+    return Game.find(params[:id]).to_json
+  else
+    return {:error => "Game not found"}.to_json
+  end
+end
 
 # post '/api/increment_score' do
 #   # logic
