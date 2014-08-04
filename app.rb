@@ -1,3 +1,5 @@
+require 'json'
+
 set :views, File.dirname(__FILE__) + '/views'
 
 before do
@@ -8,10 +10,13 @@ get '/' do
    erb :index
 end
 
-
-# get '/api/user/:id' do
-#   # logic
-# end
+get '/api/user/:id' do
+  if User.exists? params[:id]
+    return User.find(params[:id]).to_json
+  else
+    return {:error => "User not found"}.to_json
+  end
+end
 
 # get '/api/game/:id' do
 #   # logic
