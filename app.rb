@@ -26,8 +26,13 @@ get '/api/game/:id' do
   end
 end
 
-# post '/api/increment_score' do
-#   # logic
-# end
+post '/api/increment_score' do
+  if Game.exists? params[:id]
+    Game.find(params[:id]).increment_score params[:team]   
+
+    # socket.push updated_score
+  else
+    return {:error => "Game not found"}.to_json
+end
 
 
