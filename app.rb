@@ -60,4 +60,5 @@ post '/api/increment_score' do
     push_stream response
   else
     return {:error => "Game not found"}.to_json
+  end
 end
