@@ -1,65 +1,73 @@
+require 'sinatra/base'
+require 'sinatra/activerecord'
 require 'json'
+require './helpers'
 
-set :views, File.dirname(__FILE__) + '/views'
+# Require all models
+Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
 
-connections = []
+module DigiFoosball
+  class Base < ::Sinatra::Base
+    set :views, File.dirname(__FILE__) + '/views'
+    set :environment, :development
+    set :raise_errors, true
 
-def push_stream(data)
-  connections.each { |out| out << data }
-end
+    helpers Sinatra::ErrorHelpers
 
-def halt_with_404_not_found(message = nil)
-  message ||= "Not found"
-  halt 404, { message: message }.to_json
-end
+    connections = []
 
-before do
-  headers 'Content-Type' => 'application/json; charset=utf-8'
-end
+    before do
+      headers 'Content-Type' => 'application/json; charset=utf-8'
+    end
 
-get '/' do
-  content_type 'text/html'
-  erb :index
-end
+    # Routes below
 
-get '/connect', provides: 'text/event-stream' do
-  stream :keep_open do |out|
-    connections << out
+    get '/' do
+      content_type 'text/html'
+      erb :index
+    end
 
-    out.callback {
-      connections.delete(out)
-    }
-  end
-end
+    get '/connect', provides: 'text/event-stream' do
+      stream :keep_open do |out|
+        connections << out
 
-post '/push' do
-  connections.each { |out| out << params[:data]}
-end
+        out.callback {
+          connections.delete(out)
+        }
+      end
+    end
 
-get '/api/user/:id' do
-  if User.exists? params[:id]
-    return User.find(params[:id]).to_json
-  else
-    halt_with_404_not_found 'User not found' 
-  end
-end
+    post '/push' do
+      connections.each { |out| out << params[:data]}
+    end
 
-get '/api/game/:id' do
-  if Game.exists? params[:id]
-    return Game.find(params[:id]).to_json
-  else
-    halt_with_404_not_found 'Game not found' 
-  end
-end
+    get '/api/user/:id' do
+      if User.exists? params[:id]
+        return User.find(params[:id]).to_json
+      else
+        halt_with_404_not_found 'User not found' 
+      end
+    end
 
-post '/api/increment_score' do
-  if Game.exists? params[:id]
-    game = Game.find params[:id]
-    game.increment_score params[:team]   
+    get '/api/game/:id' do
+      if Game.exists? params[:id]
+        return Game.find(params[:id]).to_json
+      else
+        halt_with_404_not_found 'Game not found' 
+      end
+    end
 
-    response = game.to_json             
-    push_stream response
-  else
-    halt_with_404_not_found 'Game not found'  
+    post '/api/increment_score' do
+      if Game.exists? params[:id]
+        game = Game.find params[:id]
+        game.increment_score params[:team]   
+
+        response = game.to_json             
+        push_stream response
+      else
+        halt_with_404_not_found 'Game not found'  
+      end
+    end
+
   end
 end
