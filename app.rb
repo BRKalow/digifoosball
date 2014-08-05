@@ -35,7 +35,7 @@ get '/api/user/:id' do
   if User.exists? params[:id]
     return User.find(params[:id]).to_json
   else
-    return {:error => "User not found"}.to_json
+    json_status 404, "Game not found" 
   end
 end
 
@@ -43,7 +43,7 @@ get '/api/game/:id' do
   if Game.exists? params[:id]
     return Game.find(params[:id]).to_json
   else
-    return {:error => "Game not found"}.to_json
+    json_status 404, "Game not found" 
   end
 end
 
@@ -52,14 +52,9 @@ post '/api/increment_score' do
     game = Game.find params[:id]
     game.increment_score params[:team]   
 
-    response = {
-      :game =>        game.id,
-      :score_home =>  game.score_home,
-      :score_away =>  game.score_away
-    }.to_json              
-
+    response = game.to_json             
     push_stream response
   else
-    return {:error => "Game not found"}.to_json
+    json_status 404, "Game not found" 
   end
 end
