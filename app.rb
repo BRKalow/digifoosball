@@ -9,10 +9,11 @@ def push_stream(data)
 end
 
 before do
-  headers 'Content-Type' => 'text/html; charset=utf-8'
+  headers 'Content-Type' => 'application/json; charset=utf-8'
 end
 
 get '/' do
+  content_type 'text/html'
   erb :index
 end
 
