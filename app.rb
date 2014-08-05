@@ -2,12 +2,32 @@ require 'json'
 
 set :views, File.dirname(__FILE__) + '/views'
 
+connections = []
+
+def push_stream(data)
+  connections.each { |out| out << data }
+end
+
 before do
   headers 'Content-Type' => 'text/html; charset=utf-8'
 end
 
 get '/' do
-   erb :index
+  erb :index
+end
+
+get '/connect', provides: 'text/event-stream' do
+  stream :keep_open do |out|
+    connections << out
+
+    out.callback {
+      connections.delete(out)
+    }
+  end
+end
+
+post '/push' do
+  connections.each { |out| out << params[:data]}
 end
 
 get '/api/user/:id' do
@@ -28,11 +48,16 @@ end
 
 post '/api/increment_score' do
   if Game.exists? params[:id]
-    Game.find(params[:id]).increment_score params[:team]   
+    game = Game.find params[:id]
+    game.increment_score params[:team]   
 
-    # socket.push updated_score
+    response = {
+      :game =>        game.id,
+      :score_home =>  game.score_home,
+      :score_away =>  game.score_away
+    }.to_json              
+
+    push_stream response
   else
     return {:error => "Game not found"}.to_json
 end
-
-
