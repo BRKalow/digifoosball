@@ -8,6 +8,11 @@ def push_stream(data)
   connections.each { |out| out << data }
 end
 
+def halt_with_404_not_found(message = nil)
+  message ||= "Not found"
+  halt 404, { message: message }.to_json
+end
+
 before do
   headers 'Content-Type' => 'application/json; charset=utf-8'
 end
@@ -35,7 +40,7 @@ get '/api/user/:id' do
   if User.exists? params[:id]
     return User.find(params[:id]).to_json
   else
-    json_status 404, "Game not found" 
+    halt_with_404_not_found 'User not found' 
   end
 end
 
@@ -43,7 +48,7 @@ get '/api/game/:id' do
   if Game.exists? params[:id]
     return Game.find(params[:id]).to_json
   else
-    json_status 404, "Game not found" 
+    halt_with_404_not_found 'Game not found' 
   end
 end
 
@@ -55,6 +60,6 @@ post '/api/increment_score' do
     response = game.to_json             
     push_stream response
   else
-    json_status 404, "Game not found" 
+    halt_with_404_not_found 'Game not found'  
   end
 end
