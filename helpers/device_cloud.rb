@@ -59,7 +59,7 @@ module Sinatra
     def self.registered(app)
       app.helpers DeviceCloud::Helpers
 
-      app.set :device_cloud, YAML.load('config/device_cloud.yaml')
+      app.set :device_cloud, YAML.load_file('config/device_cloud.yml')
     end
   end
 
