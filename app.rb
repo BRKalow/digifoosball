@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'sinatra/activerecord'
 require 'json'
 require 'yaml'
+require 'rest-client'
 
 # Require all models
 Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
@@ -21,6 +22,15 @@ module DigiFoosball
     def push_stream(data)
       puts @@connections
       @@connections.each { |out| out << "data: #{data}\n\n" }
+    end
+
+    def increment_score(id, team)
+      if Game.exists? params[:id]
+        game = Game.find params[:id]
+        game.increment_score params[:team]   
+
+        push_stream game.to_json
+      end
     end
 
     @@connections = []
@@ -68,17 +78,20 @@ module DigiFoosball
       end
     end
 
-    post '/api/increment_score' do
-      if Game.exists? params[:id]
-        game = Game.find params[:id]
-        game.increment_score params[:team]   
+    put '/receive_from_dc' do
+      #resp = parse_dc_response
+      #if resp[:should_update_score] increment_score resp[:id], resp[:team] end
 
-        response = game.to_json             
-        push_stream response
-      else
-        halt_with_404_not_found 'Game not found'  
-      end
+      status 200
+      body ''
     end
 
+    # For testing:
+    get '/artifical_dc_push/:id/:team' do
+      increment_score params[:id], params[:team] 
+
+      status 200
+      body ''
+    end
   end
 end

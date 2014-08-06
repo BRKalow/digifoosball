@@ -7,6 +7,7 @@ app.controller('MainCtl', function($scope, $cookieStore) {
     $scope.msg = null;
 
     var handleReceivePush = function (msg) {
+        console.log("msg received");
         $scope.$apply(function() {
             $scope.msg = JSON.parse(msg.data);
         });
