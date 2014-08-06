@@ -8,16 +8,15 @@ scores for foosball games.
 Usage Notes
 -----------
 
-Create a file named `app.yml` in the `config/` directory containing the
-following information:
+Create a file named `device_cloud.yml` in the `config/` directory containing
+the following information:
 
 ```
-device_cloud:
-    username:
-    password:
-    device_id:
-    home_input:
-    away_input:
+username:
+password:
+device_id:
+home_input:
+away_input:
 ```
 
 Technologies

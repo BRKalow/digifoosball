@@ -4,7 +4,10 @@ gem 'sinatra'
 gem 'sinatra-activerecord'
 gem 'sqlite3'
 gem 'rake'
-gem 'device_cloud'
+
+# Device Cloud
+gem 'nokogiri'
+gem 'rest-client'
 
 group :development do
     gem 'shotgun'

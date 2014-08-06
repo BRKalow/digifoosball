@@ -1,23 +1,27 @@
 require 'sinatra/base'
 require 'sinatra/activerecord'
 require 'json'
-require './helpers'
+require 'yaml'
 
 # Require all models
 Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
+# Require all helpers
+Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
 module DigiFoosball
-  class Base < ::Sinatra::Base
+  class Base < Sinatra::Base
     set :views, File.dirname(__FILE__) + '/views'
     set :environment, :development
     set :raise_errors, true
+
+    register Sinatra::DeviceCloud
+
+    helpers Sinatra::ErrorHelpers
 
     def push_stream(data)
       puts @@connections
       @@connections.each { |out| out << "data: #{data}\n\n" }
     end
-
-    helpers Sinatra::ErrorHelpers
 
     @@connections = []
 
@@ -26,7 +30,7 @@ module DigiFoosball
     end
 
     # Below be routes 
-    
+
     get '/' do
       content_type 'text/html'
       erb :index
