@@ -12,37 +12,44 @@ module DigiFoosball
     set :environment, :development
     set :raise_errors, true
 
+    def push_stream(data)
+      puts @@connections
+      @@connections.each { |out| out << "data: #{data}\n\n" }
+    end
+
     helpers Sinatra::ErrorHelpers
 
-    connections = []
+    @@connections = []
 
     before do
       headers 'Content-Type' => 'application/json; charset=utf-8'
     end
 
-    # Routes below
-
+    # Below be routes 
+    
     get '/' do
       content_type 'text/html'
       erb :index
     end
 
-    get '/connect', provides: 'text/event-stream' do
+    get '/connect' do
+      content_type 'text/event-stream'
       stream :keep_open do |out|
-        connections << out
+        @@connections << out
 
         out.callback {
-          connections.delete(out)
+          @@connections.delete(out)
         }
       end
     end
 
     post '/push' do
-      connections.each { |out| out << params[:data]}
+      @connections.each { |out| out << params[:data]}
     end
 
     get '/api/user/:id' do
       if User.exists? params[:id]
+        push_stream User.find(params[:id]).to_json
         return User.find(params[:id]).to_json
       else
         halt_with_404_not_found 'User not found' 

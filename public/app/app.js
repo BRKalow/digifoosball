@@ -1,22 +1,22 @@
 var app = angular.module('DigiFoosball', ['ui.bootstrap', 'ngCookies']);
 
-/**
- * Loading Directive
- * @see http://tobiasahlin.com/spinkit/
- */
-app.directive('loading', function () {
-    return {
-        restrict: 'AE',
-        replace: 'false',
-        template: '<div class="loading"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>'
-    };
-});
-
 app.controller('MainCtl', function($scope, $cookieStore) {
+    /**
+    * EventStream related declarations
+    */
+    $scope.msg = null;
+
+    var handleReceivePush = function (msg) {
+        $scope.$apply(function() {
+            $scope.msg = JSON.parse(msg.data);
+        });
+    }
+    
+    var source = new EventSource('/connect');
+    source.addEventListener('message', handleReceivePush, false);
 
     /**
      * Sidebar Toggle & Cookie Control
-     *
      */
     var mobileView = 992;
 
