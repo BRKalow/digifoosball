@@ -5,6 +5,7 @@
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
 digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, Statistics) {
+    $scope.$parent.title = "Dashboard";
     /**
     * EventStream related declarations
     */
@@ -73,4 +74,17 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, St
     };
 
     window.onresize = function() { $scope.$apply(); };
+});
+
+digiFoosballControllers.controller('PlayerListCtrl', function($scope) { 
+  $scope.$parent.title = "Players";
+});
+digiFoosballControllers.controller('PlayerCtrl', function($scope) {
+  $scope.$parent.title = "Player";
+});
+digiFoosballControllers.controller('GameListCtrl', function($scope) {
+  $scope.$parent.title = "Games";
+});
+digiFoosballControllers.controller('GameCtrl', function($scope) {
+  $scope.$parent.title = "Game";
 });

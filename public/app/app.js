@@ -21,19 +21,19 @@ app.config(['$routeProvider', '$locationProvider',
       }).
       when('/players', {
         templateUrl: 'app/partials/user-list.html',
-        controller:  'MainCtrl'
+        controller:  'PlayerListCtrl'
       }).
       when('/players/:userId', {
         templateUrl: 'app/partials/user-detail.html',
-        controller:  'MainCtrl'
+        controller:  'PlayerCtrl'
       }).
       when('/games', {
         templateUrl: 'app/partials/game-list.html',
-        controller:  'MainCtrl'
+        controller:  'GameListCtrl'
       }).
       when('/games/:gameId', {
         templateUrl: 'app/partials/game-detail.html',
-        controller:  'MainCtrl'
+        controller:  'GameCtrl'
       }).
       otherwise({
         redirectTo: '/'
