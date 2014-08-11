@@ -11,7 +11,6 @@ var app = angular.module('DigiFoosball', [
   'digiFoosballServices'
 ]);
 
-
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider.
