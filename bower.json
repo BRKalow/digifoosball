@@ -1,0 +1,12 @@
+{
+    "name":         "digi-foosball",
+    "description":  "Digi Student Engineer automated Foosball table",
+    "version":      "0.0.0",
+    "homepage":     "https://github.com/BRKalow/digifoosball",
+    "private":      true,
+    "dependencies": {
+        "angular": "1.2.x",
+        "angular-route": "~1.2.x",
+        "angular-restmod": "~0.14.0"
+    }
+}
