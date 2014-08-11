@@ -4,7 +4,7 @@
 
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
-digiFoosballControllers.controller('MainCtl', function($scope, $cookieStore) {
+digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore) {
     /**
     * EventStream related declarations
     */
