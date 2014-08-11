@@ -12,13 +12,14 @@ digiFoosballServices.factory('Game', function($resource) {
   return $resource('/api/games/:gameId');
 });
 
-digiFoosballServices.service('Statistics', function($http) {
+digiFoosballServices.service('Statistics', function($http,$q) {
   var Statistics = {
-    async: function() {
-      var promise = $http.get('/api/statistics').then(function (response) {
-        return response.data;
+    poll: function() {
+      var deferred = $q.defer();
+      $http.get('/api/statistics').then(function (response) {
+        deferred.resolve(response.data); 
       });
-      return promise;
+      return deferred.promise;
     }
   };
   return Statistics;

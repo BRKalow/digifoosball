@@ -12,27 +12,34 @@ var app = angular.module('DigiFoosball', [
 ]);
 
 
-app.config(['$routeProvider',
-  function($routeProvider) {
+app.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
     $routeProvider.
-      when('/users', {
-        templateUrl: 'app/partials/user-list.html',
-        controller:  'UserListCtrl'
+      when('/', {
+        templateUrl: '/app/partials/index-detail.html',
+        controller:  'MainCtrl'
       }).
-      when('/users/:userId', {
+      when('/players', {
+        templateUrl: 'app/partials/user-list.html',
+        controller:  'MainCtrl'
+      }).
+      when('/players/:userId', {
         templateUrl: 'app/partials/user-detail.html',
-        controller:  'UserDetailCtrl'
+        controller:  'MainCtrl'
       }).
       when('/games', {
         templateUrl: 'app/partials/game-list.html',
-        controller:  'GameListCtrl'
+        controller:  'MainCtrl'
       }).
       when('/games/:gameId', {
         templateUrl: 'app/partials/game-detail.html',
-        controller:  'GameDetailCtrl'
+        controller:  'MainCtrl'
       }).
       otherwise({
         redirectTo: '/'
       });
+
+      $locationProvider.html5Mode(true);
+      $locationProvider.hashPrefix('!');
   }]);
 

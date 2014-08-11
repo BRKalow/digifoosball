@@ -22,9 +22,17 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, St
     /**
     * Statistics
     */
-    Statistics.async().then(function(data) {
+    Statistics.poll().then(function(data) {
       $scope.stats = data;
-    });
+    }); 
+    var updateStats = function() {
+      $scope.$apply(function() {
+        Statistics.poll().then(function(data) {
+          $scope.stats = data;
+        });
+      });
+    };
+    var statsTimer = setInterval(updateStats, 10000);
 
     /**
      * Sidebar Toggle & Cookie Control
