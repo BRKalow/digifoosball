@@ -10,11 +10,16 @@
   <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/dashboard/dashboard.css">
   <link rel="stylesheet" type="text/css" href="css/themes/blue.css">
+
   <script type="text/javascript" src="js/angular.min.js"></script>
   <script type="text/javascript" src="js/angular-cookies.js"></script>
   <script type="text/javascript" src="js/ng-bootstrap-tpls.min.js"></script>
+  <script type="text/javascript" src="app/bower_components/angular-inflector/dist/angular-inflector.min.js"></script>
+  <script type="text/javascript" src="app/bower_components/angular-restmod/dist/angular-restmod.min.js"></script>
   <script type="text/javascript" src="app/app.js"></script>
-  <script type="text/javascript" src="app/directives/loading.js"></script>
+  <script type="text/javascript" src="app/controllers.js"></script>
+  <script type="text/javascript" src="app/directives.js"></script>
+  <script type="text/javascript" src="app/services.js"></script>
 </head>
 <body ng-controller="MainCtl">
   <div id="page-wrapper" ng-class="{'active': toggle}" ng-cloak>
@@ -42,19 +47,9 @@
         </li>
       </ul>
       <div class="sidebar-footer">
-        <div class="col-xs-4">
-          <a href="https://github.com/Ehesp/Responsive-Dashboard" target="_blank">
+        <div class="col-xs-12">
+          <a href="https://github.com/BRKalow/digifoosball" target="_blank">
             Github
-          </a>
-        </div>
-        <div class="col-xs-4">
-          <a href="#" target="_blank">
-            About
-          </a>
-        </div>
-        <div class="col-xs-4">
-          <a href="#">
-            Support
           </a>
         </div>
       </div>

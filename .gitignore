@@ -1,1 +1,2 @@
 config/device_cloud.yml
+public/app/bower_components/*

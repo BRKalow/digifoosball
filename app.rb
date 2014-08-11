@@ -70,7 +70,7 @@ module DigiFoosball
       end
     end
 
-    get '/api/game/:id' do
+    get '/api/games/:id' do
       if Game.exists? params[:id]
         return Game.find(params[:id]).to_json
       else

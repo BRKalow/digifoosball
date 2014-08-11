@@ -1,3 +1,7 @@
+'use strict';
+
+/* Directives */
+
 /**
  * Loading Directive
  * @see http://tobiasahlin.com/spinkit/
