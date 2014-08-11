@@ -64,7 +64,7 @@ module DigiFoosball
     get '/api/user/:id' do
       if User.exists? params[:id]
         push_stream User.find(params[:id]).to_json
-        return User.find(params[:id]).to_json
+        return User.find(params[:id]).to_json :include => :games
       else
         halt_with_404_not_found 'User not found' 
       end
@@ -76,6 +76,14 @@ module DigiFoosball
       else
         halt_with_404_not_found 'Game not found' 
       end
+    end
+
+    get '/api/statistics' do
+      result = {
+        :games_played => Game.count,
+        :goals_scored => User.sum(:goals_scored),
+        :players =>      User.count
+      }.to_json
     end
 
     put '/receive_from_dc' do

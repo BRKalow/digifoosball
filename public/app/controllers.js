@@ -4,14 +4,13 @@
 
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
-digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore) {
+digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, Statistics) {
     /**
     * EventStream related declarations
     */
     $scope.msg = null;
 
     var handleReceivePush = function (msg) {
-        console.log("msg received");
         $scope.$apply(function() {
             $scope.msg = JSON.parse(msg.data);
         });
@@ -19,6 +18,13 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore) {
     
     var source = new EventSource('/connect');
     source.addEventListener('message', handleReceivePush, false);
+
+    /**
+    * Statistics
+    */
+    Statistics.async().then(function(data) {
+      $scope.stats = data;
+    });
 
     /**
      * Sidebar Toggle & Cookie Control

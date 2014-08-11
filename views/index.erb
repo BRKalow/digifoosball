@@ -15,12 +15,11 @@
   <script type="text/javascript" src="js/angular-cookies.js"></script>
   <script type="text/javascript" src="js/ng-bootstrap-tpls.min.js"></script>
   <script type="text/javascript" src="app/bower_components/angular-route/angular-route.min.js"></script>
-  <script type="text/javascript" src="app/bower_components/angular-inflector/dist/angular-inflector.min.js"></script>
-  <script type="text/javascript" src="app/bower_components/angular-restmod/dist/angular-restmod.min.js"></script>
+  <script type="text/javascript" src="app/bower_components/angular-resource/angular-resource.min.js"></script>
   <script type="text/javascript" src="app/app.js"></script>
-  <script type="text/javascript" src="app/controllers.js"></script>
-  <script type="text/javascript" src="app/directives.js"></script>
   <script type="text/javascript" src="app/services.js"></script>
+  <script type="text/javascript" src="app/directives.js"></script>
+  <script type="text/javascript" src="app/controllers.js"></script>
 </head>
 <body ng-controller="MainCtrl">
   <div id="page-wrapper" ng-class="{'active': toggle}" ng-cloak>
@@ -38,13 +37,13 @@
         </li>
         <li class="sidebar-title"><span>NAVIGATION</span></li>
         <li class="sidebar-list">
-          <a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+          <a href="/">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#">Game History <span class="menu-icon fa fa-tasks"></span></a>
+          <a href="/games">Game History <span class="menu-icon fa fa-trophy"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#">Player List <span class="menu-icon fa fa-users"></span></a>
+          <a href="/players">Player List <span class="menu-icon fa fa-users"></span></a>
         </li>
       </ul>
       <div class="sidebar-footer">
@@ -85,58 +84,43 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-3 col-md-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-xs-12">
               <div class="widget">
                 <div class="widget-body">
                   <div class="widget-icon green pull-left">
                     <i class="fa fa-users"></i>
                   </div>
                   <div class="widget-content pull-left">
-                    <div class="title">80</div>
-                    <div class="comment">Users</div>
+                    <div class="title">{{ stats.players }}</div>
+                    <div class="comment">Players</div>
                   </div>
                   <div class="clearfix"></div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-xs-12">
               <div class="widget">
                 <div class="widget-body">
                   <div class="widget-icon red pull-left">
-                    <i class="fa fa-tasks"></i>
+                    <i class="fa fa-trophy"></i>
                   </div>
                   <div class="widget-content pull-left">
-                    <div class="title">16</div>
-                    <div class="comment">Servers</div>
+                    <div class="title">{{ stats.games_played }}</div>
+                    <div class="comment">Games played</div>
                   </div>
                   <div class="clearfix"></div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-xs-12">
               <div class="widget">
                 <div class="widget-body">
                   <div class="widget-icon orange pull-left">
-                    <i class="fa fa-sitemap"></i>
+                    <i class="fa fa-exclamation"></i>
                   </div>
                   <div class="widget-content pull-left">
-                    <div class="title">225</div>
-                    <div class="comment">Documents</div>
-                  </div>
-                  <div class="clearfix"></div>
-                </div>
-              </div>
-            </div>
-            <div class="spacer visible-xs"></div>
-            <div class="col-lg-3 col-md-6 col-xs-12">
-              <div class="widget">
-                <div class="widget-body">
-                  <div class="widget-icon blue pull-left">
-                    <i class="fa fa-support"></i>
-                  </div>
-                  <div class="widget-content pull-left">
-                    <div class="title">62</div>
-                    <div class="comment">Tickets</div>
+                    <div class="title">{{ stats.goals_scored }}</div>
+                    <div class="comment">Goals scored</div>
                   </div>
                   <div class="clearfix"></div>
                 </div>
@@ -146,24 +130,15 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="widget">
-                <div class="widget-title"><i class="fa fa-tasks"></i> Servers</div>
+                <div class="widget-title"><i class="fa fa-trophy"></i> Recent Games</div>
                 <div class="widget-body medium no-padding">
                   <div class="table-responsive">
                     <table class="table">
                       <tbody>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
-                        <tr><td>Server Name</td><td>127.0.0.1:80</td></tr>
+                        <tr><td>Bryce vs. Christine</td><td>5 - 4</td></tr>
+                        <tr><td>Bryce vs. Christine</td><td>5 - 4</td></tr>
+                        <tr><td>Bryce vs. Christine</td><td>5 - 4</td></tr>
+                        <tr><td>Bryce vs. Christine</td><td>5 - 4</td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -173,7 +148,7 @@
             <div class="col-lg-6">
               <div class="widget">
                 <div class="widget-title">
-                  <i class="fa fa-users"></i> Users
+                  <i class="fa fa-users"></i> Players
                   <input type="text" placeholder="Search" class="form-control input-sm pull-right" />
                   <div class="clearfix"></div>
                 </div>
@@ -182,60 +157,30 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th class="text-center">ID</th>
                           <th>Username</th>
-                          <th>Role</th>
-                          <th>Account</th>
+                          <th class="text-center">Games Played</th>
+                          <th class="text-center">Goals Scored</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td class="text-center">1</td>
-                          <td>Joe Bloggs</td>
-                          <td>Super Admin</td>
-                          <td>AZ23045</td>
+                          <td>Bryce</td>
+                          <td class="text-center">10</td>
+                          <td class="text-center">39</td>
                         </tr>
                         <tr>
-                          <td class="text-center">2</td>
-                          <td>Timothy Hernandez</td>
-                          <td>Admin</td>
-                          <td>AU24783</td>
+                          <td>Bryce</td>
+                          <td class="text-center">10</td>
+                          <td class="text-center">39</td>
                         </tr>
                         <tr>
-                          <td class="text-center">3</td>
-                          <td>Joe Bickham</td>
-                          <td>User</td>
-                          <td>AM23781</td>
+                          <td>Bryce</td>
+                          <td class="text-center">10</td>
+                          <td class="text-center">39</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="widget">
-                <div class="widget-title">
-                  <i class="fa fa-warning"></i> Notifications
-                  <button class="btn btn-sm btn-success pull-right">Clear</button>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="widget-body">
-                  <div class="alert alert-success">No reported server issues</div>
-                  <div class="alert alert-info">A new user 'Joe Bickham' joined!</div>
-                  <div class="alert alert-warning">Server 'HAProxyVM2' did not respond on it's last check, warning issued!</div>
-                  <div class="alert alert-danger">Server 'APPPHVM04' has not responded on it's last two checks!</div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="widget">
-                <div class="widget-title"><i class="fa fa-cog fa-spin"></i> Loading Directive</div>
-                <div class="widget-body">
-                  <!-- Check out the Angular Directive inside bootstrap.js! -->
-                  <loading></loading>
                 </div>
               </div>
             </div>
