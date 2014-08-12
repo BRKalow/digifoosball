@@ -67,8 +67,18 @@ module DigiFoosball
 
     get '/api/user/:id' do
       if User.exists? params[:id]
-        push_stream User.find(params[:id]).to_json
-        return User.find(params[:id]).to_json :include => :games
+        games = [] 
+        home_games = Game.find_by_player_home_id params[:id].to_json :include => [:player_home, :player_away]
+        away_games = Game.find_by_player_away_id params[:id].to_json :include => [:player_home, :player_away]
+        if home_games != nil
+          games << home_games
+        end
+        if away_games != nil
+          games << away_games
+        end
+        user = User.find(params[:id]).include(:games)
+        user.games = games
+        return user 
       else
         halt_with_404_not_found 'User not found' 
       end

@@ -120,8 +120,9 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 digiFoosballControllers.controller('PlayerListCtrl', function($scope) { 
   $scope.$parent.title = "Players";
 });
-digiFoosballControllers.controller('PlayerCtrl', function($scope) {
+digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User) {
   $scope.$parent.title = "Player";
+  $scope.user = User.get({userId:$routeParams.userId});
 });
 digiFoosballControllers.controller('GameListCtrl', function($scope) {
   $scope.$parent.title = "Games";
