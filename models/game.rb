@@ -2,6 +2,8 @@ class Game < ActiveRecord::Base
   belongs_to :player_home, :class_name => 'User'
   belongs_to :player_away, :class_name => 'User'
 
+  default_scope { order('created_at DESC') }
+
   after_initialize :set_defaults
 
   def set_defaults
@@ -41,11 +43,12 @@ class Game < ActiveRecord::Base
     self.handle_game_over if self.game_finished?
   end
 
-  def handle_game_over
-    self.winner.wins += 1
-    self.winner.save!
+  def length
+    ((self.updated_at - self.created_at)/60*4.0).round / 4.0
+  end
 
-    self.loser.losses += 1
-    self.loser.save!
+  def handle_game_over
+    self.winner.handle_game_over 'win', self.length
+    self.loser.handle_game_over 'loss', self.length
   end
 end

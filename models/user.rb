@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
     self.games_played ||= 0
     self.goals_scored ||= 0
     self.goals_given ||= 0
+    self.time_played ||= 0
   end
   
   def win_loss_percentage
@@ -25,5 +26,16 @@ class User < ActiveRecord::Base
 
   def total_games
     self.wins + self.losses
+  end
+
+  def handle_game_over(result, game_length)
+    if result == 'win'
+      self.wins += 1
+    elsif result == 'loss'
+      self.losses += 1
+    end
+    self.time_played += game_length
+
+    self.save!
   end
 end

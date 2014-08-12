@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811155007) do
+ActiveRecord::Schema.define(version: 20140812153935) do
 
   create_table "games", force: true do |t|
     t.integer  "player_home_id"
@@ -23,17 +23,7 @@ ActiveRecord::Schema.define(version: 20140811155007) do
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "department"
-    t.integer  "wins"
-    t.integer  "losses"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "games_played"
-    t.integer  "goals_scored"
-    t.integer  "goals_given"
-  end
+# Could not dump table "users" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
 end
