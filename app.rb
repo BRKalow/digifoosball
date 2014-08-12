@@ -74,6 +74,10 @@ module DigiFoosball
       end
     end
 
+    get '/api/games' do
+      Game.all.to_json :include => [:player_home, :player_away]
+    end
+
     get '/api/games/:id' do
       if Game.exists? params[:id]
         return Game.find(params[:id]).to_json

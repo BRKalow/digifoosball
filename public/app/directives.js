@@ -17,8 +17,17 @@ app.directive('loading', function () {
 app.directive('userListIndex', function() {
   return {
     restrict: 'AE',
-    scope: {users: '=userList'},
+    scope: {users: '=for'},
     templateUrl: 'app/partials/user-list-index.tpl.html',
     replace: true
   };
 });
+
+app.directive('recentGamesIndex', function() {
+  return {
+    restrict: 'AE',
+    scope: {games: '=for'},
+    templateUrl: 'app/partials/games-list-index.tpl.html',
+    replace: true
+  }
+})

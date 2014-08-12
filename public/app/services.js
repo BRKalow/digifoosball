@@ -9,7 +9,7 @@ digiFoosballServices.factory('User', function($resource) {
 });
 
 digiFoosballServices.factory('Game', function($resource) {
-  return $resource('/api/games/:gameId', {userId:'@id'});
+  return $resource('/api/games/:gameId', {gameId:'@id'});
 });
 
 digiFoosballServices.service('Statistics', function($http,$q) {

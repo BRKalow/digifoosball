@@ -1,0 +1,15 @@
+<div class="widget">
+  <div class="widget-title"><i class="fa fa-trophy"></i> Recent Games</div>
+  <div class="widget-body medium no-padding">
+    <div class="table-responsive">
+      <table class="table">
+        <tbody>
+          <tr ng-repeat="game in games">
+            <td>{{ game.player_home.name }} vs. {{ game.player_away.name }}</td>
+            <td>{{ game.score_home }} - {{ game.score_away }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
