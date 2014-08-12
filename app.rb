@@ -90,7 +90,8 @@ module DigiFoosball
       result = {
         :games_played => Game.count,
         :goals_scored => User.sum(:goals_scored),
-        :players =>      User.count
+        :players =>      User.count,
+        :time_spent =>   User.sum(:time_played)
       }.to_json
     end
 
