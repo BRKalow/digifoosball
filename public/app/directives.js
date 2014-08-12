@@ -13,3 +13,12 @@ app.directive('loading', function () {
     template: '<div class="loading"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>'
   };
 });
+
+app.directive('userListIndex', function() {
+  return {
+    restrict: 'AE',
+    scope: {users: '=userList'},
+    templateUrl: 'app/partials/user-list-index.tpl.html',
+    replace: true
+  };
+});

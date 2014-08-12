@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
   def win_loss_percentage
     return self.wins.fdiv self.games_played
   end
+
+  def total_games
+    self.wins + self.losses
+  end
 end

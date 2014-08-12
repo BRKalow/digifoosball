@@ -61,6 +61,10 @@ module DigiFoosball
       @connections.each { |out| out << params[:data]}
     end
 
+    get '/api/user' do
+      User.all.to_json
+    end
+
     get '/api/user/:id' do
       if User.exists? params[:id]
         push_stream User.find(params[:id]).to_json

@@ -1,0 +1,27 @@
+<div class="widget">
+  <div class="widget-title">
+    <i class="fa fa-users"></i> Players
+    <input type="text" placeholder="Search" class="form-control input-sm pull-right" />
+    <div class="clearfix"></div>
+  </div>
+  <div class="widget-body medium no-padding">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th class="text-center">Games Played</th>
+            <th class="text-center">Goals Scored</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>{{ user.name }}</td>
+                <td class="text-center">{{ user.wins + user.losses }}</td>
+                <td class="text-center">{{ user.goals_scored }}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

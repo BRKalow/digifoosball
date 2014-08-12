@@ -5,11 +5,11 @@
 var digiFoosballServices = angular.module('digiFoosballServices', ['ngResource']);
 
 digiFoosballServices.factory('User', function($resource) {
-  return $resource('/api/user/:userId');
+  return $resource('/api/user/:userId', {userId:'@id'});
 });
 
 digiFoosballServices.factory('Game', function($resource) {
-  return $resource('/api/games/:gameId');
+  return $resource('/api/games/:gameId', {userId:'@id'});
 });
 
 digiFoosballServices.service('Statistics', function($http,$q) {

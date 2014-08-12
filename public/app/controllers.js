@@ -4,7 +4,7 @@
 
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
-digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, Statistics) {
+digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, Statistics, User) {
     $scope.$parent.title = "Dashboard";
     /**
     * EventStream related declarations
@@ -35,6 +35,8 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, St
     };
     var statsTimer = setInterval(updateStats, 10000);
 
+    $scope.users = User.query();
+    
     /**
      * Sidebar Toggle & Cookie Control
      */
