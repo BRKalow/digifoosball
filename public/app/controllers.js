@@ -59,6 +59,23 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         });
     };
 
+    $scope.newPlayerModal = function() {
+
+        $scope.hasModalOpen = true;
+
+        var modalInstance = $modal.open({
+            templateUrl: 'app/partials/new-player-modal.tpl.html',
+            backdrop: 'static',
+            scope: $scope 
+        });
+
+        modalInstance.result.then(function() {
+            $scope.hasModalOpen = false;
+        }, function(error) {
+            $scope.hasModalOpen = false;
+        });
+    };
+
     /**
      * Sidebar Toggle & Cookie Control
      */
