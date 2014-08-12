@@ -374,3 +374,18 @@
   border-bottom: 1px solid #f3f3f3;
   padding: 15px 15px 15px 15px;
 }
+
+.modal {
+  overflow-y: hidden;
+}
+.open-modal {
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
+
+html,body,.page-wrapper {
+  height: 100%;
+}

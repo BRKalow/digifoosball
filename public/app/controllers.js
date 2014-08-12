@@ -4,7 +4,7 @@
 
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
-digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, Statistics, User, Game) {
+digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, Statistics, User, Game) {
     $scope.$parent.title = "Dashboard";
     /**
     * EventStream related declarations
@@ -37,6 +37,27 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, St
 
     $scope.users = User.query();
     $scope.games = Game.query();
+
+    /**
+    * Modals
+    */
+    $scope.hasModalOpen = false;
+    $scope.newGameModal = function() {
+
+        $scope.hasModalOpen = true;
+
+        var modalInstance = $modal.open({
+            templateUrl: 'app/partials/new-game-modal.tpl.html',
+            backdrop: 'static',
+            scope: $scope 
+        });
+
+        modalInstance.result.then(function() {
+            $scope.hasModalOpen = false;
+        }, function(error) {
+            $scope.hasModalOpen = false;
+        });
+    };
 
     /**
      * Sidebar Toggle & Cookie Control
