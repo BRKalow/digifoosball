@@ -16,6 +16,7 @@ app.config(['$routeProvider', '$locationProvider',
     $routeProvider.
       when('/', {
         templateUrl: '/app/partials/index-detail.html',
+        controller:  'IndexCtrl'
       }).
       when('/players', {
         templateUrl: '../app/partials/user-list.html',

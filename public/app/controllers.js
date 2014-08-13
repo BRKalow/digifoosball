@@ -4,7 +4,7 @@
 
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
-digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, Statistics, User, Game) {
+digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore) {
     $scope.$parent.title = "Dashboard";
     /**
     * EventStream related declarations
@@ -15,66 +15,10 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         $scope.$apply(function() {
             $scope.msg = JSON.parse(msg.data);
         });
-    }
-    
+    };
+
     var source = new EventSource('/connect');
     source.addEventListener('message', handleReceivePush, false);
-
-    /**
-    * Statistics
-    */
-    Statistics.poll().then(function(data) {
-      $scope.stats = data;
-    }); 
-    var updateStats = function() {
-      $scope.$apply(function() {
-        Statistics.poll().then(function(data) {
-          $scope.stats = data;
-        });
-      });
-    };
-    var statsTimer = setInterval(updateStats, 10000);
-
-    $scope.users = User.query();
-    $scope.games = Game.query();
-
-    /**
-    * Modals
-    */
-    $scope.hasModalOpen = false;
-    $scope.newGameModal = function() {
-
-        $scope.hasModalOpen = true;
-
-        var modalInstance = $modal.open({
-            templateUrl: 'app/partials/new-game-modal.tpl.html',
-            backdrop: 'static',
-            scope: $scope 
-        });
-
-        modalInstance.result.then(function() {
-            $scope.hasModalOpen = false;
-        }, function(error) {
-            $scope.hasModalOpen = false;
-        });
-    };
-
-    $scope.newPlayerModal = function() {
-
-        $scope.hasModalOpen = true;
-
-        var modalInstance = $modal.open({
-            templateUrl: 'app/partials/new-player-modal.tpl.html',
-            backdrop: 'static',
-            scope: $scope 
-        });
-
-        modalInstance.result.then(function() {
-            $scope.hasModalOpen = false;
-        }, function(error) {
-            $scope.hasModalOpen = false;
-        });
-    };
 
     /**
      * Sidebar Toggle & Cookie Control
@@ -117,16 +61,78 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     window.onresize = function() { $scope.$apply(); };
 });
 
-digiFoosballControllers.controller('PlayerListCtrl', function($scope) { 
+digiFoosballControllers.controller('IndexCtrl', function($scope, $modal, Statistics, User, Game) {
+    $scope.$parent.title = 'Dashboard';
+    /**
+    * Statistics
+    */
+    Statistics.poll().then(function(data) {
+      $scope.stats = data;
+    });
+    var updateStats = function() {
+      $scope.$apply(function() {
+        Statistics.poll().then(function(data) {
+          $scope.stats = data;
+        });
+      });
+    };
+    var statsTimer = setInterval(updateStats, 10000);
+
+    $scope.users = User.query();
+    $scope.games = Game.query();
+
+    /**
+    * Modals
+    */
+    $scope.hasModalOpen = false;
+    $scope.newGameModal = function() {
+
+        $scope.hasModalOpen = true;
+
+        var modalInstance = $modal.open({
+            templateUrl: 'app/partials/new-game-modal.tpl.html',
+            backdrop: 'static',
+            scope: $scope
+        });
+
+        modalInstance.result.then(function() {
+            $scope.hasModalOpen = false;
+        }, function(error) {
+            $scope.hasModalOpen = false;
+        });
+    };
+
+    $scope.newPlayerModal = function() {
+
+        $scope.hasModalOpen = true;
+
+        var modalInstance = $modal.open({
+            templateUrl: 'app/partials/new-player-modal.tpl.html',
+            backdrop: 'static',
+            scope: $scope
+        });
+
+        modalInstance.result.then(function() {
+            $scope.hasModalOpen = false;
+        }, function(error) {
+            $scope.hasModalOpen = false;
+        });
+    };
+});
+
+digiFoosballControllers.controller('PlayerListCtrl', function($scope) {
   $scope.$parent.title = "Players";
 });
+
 digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User) {
   $scope.$parent.title = "Player";
   $scope.user = User.get({userId:$routeParams.userId});
 });
+
 digiFoosballControllers.controller('GameListCtrl', function($scope) {
   $scope.$parent.title = "Games";
 });
+
 digiFoosballControllers.controller('GameCtrl', function($scope) {
   $scope.$parent.title = "Game";
 });
