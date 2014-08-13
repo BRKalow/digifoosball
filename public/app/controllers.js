@@ -145,10 +145,10 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Ga
         var score_history = points.split(",");
         var home_score = 0;
         var away_score = 0;
-        var data_points = [];
+        var data_points = [{x:"0",y:[0,0]}];
 
-        for(var i = 0; i < score_history.length; i++) {
-            if (score_history[i] == 'home') {
+        for(var i = 1; i <= score_history.length; i++) {
+            if (score_history[i-1] == 'home') {
                 home_score += 1;
             } else {
                 away_score += 1;

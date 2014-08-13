@@ -2,8 +2,8 @@
     <div class="col-lg-8 col-md-12 col-xs-12">
         <div class="widget scoreboard">
             <div class="widget-body large text-center">
-                <span class="pull-left">{{ game.player_home.name }}</span>
-                <span class="pull-right">{{ game.player_away.name }}</span>
+                <span class="pull-left name">{{ game.player_home.name }}</span>
+                <span class="pull-right name">{{ game.player_away.name }}</span>
                 <span class="score">
                     <span ng-class="{'winner': game.score_home == 5}">{{ game.score_home }}</span> : 
                     <span ng-class="{'winner': game.score_away == 5}">{{ game.score_away }}</span>

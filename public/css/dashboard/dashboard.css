@@ -96,6 +96,18 @@
   }
 
 /* Sidebar */
+  ul.sidebar .sidebar-main a, .sidebar-footer, ul.sidebar .sidebar-list a:hover {
+    background: #007A46;
+  }
+  #sidebar-wrapper {
+    background: #00a05b;
+  }
+  ul.sidebar .sidebar-title {
+    color: #00D67A;
+  }
+  #page-wrapper:not(.active) ul.sidebar .sidebar-title.separator {
+    background: #007A46;
+  }
   ul.sidebar {
     position: absolute;
     top: 0;
@@ -150,7 +162,7 @@
   ul.sidebar .sidebar-list a {
     text-indent: 25px;
     font-size: 15px;
-    color: #b2bfdc;
+    color: #fff;
     line-height: 40px;
   }
   ul.sidebar .sidebar-list a:hover {
@@ -409,6 +421,9 @@
   background: #333;
   color: #fff;
 }
+.scoreboard .name {
+  font-size: 24px;
+}
 .score {
   font-family: "JD LED3";
   font-size: 200px;
@@ -438,10 +453,6 @@
 .ac-line {
   stroke-width: 5px!important;
 }
-svg path {
-  /*stroke: #333!important;*/
-}
-
 circle {
   display: none;
 }
