@@ -4,6 +4,7 @@
 
 var app = angular.module('DigiFoosball', [
   'ui.bootstrap',
+  'angularCharts',
   'ngCookies',
   'ngRoute',
 
@@ -15,23 +16,23 @@ app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: '/app/partials/index-detail.html',
+        templateUrl: 'app/partials/index-detail.html',
         controller:  'IndexCtrl'
       }).
       when('/players', {
-        templateUrl: '../app/partials/user-list.html',
+        templateUrl: 'app/partials/user-list.html',
         controller:  'PlayerListCtrl'
       }).
       when('/players/:userId', {
-        templateUrl: '../app/partials/user-detail.html',
+        templateUrl: 'app/partials/user-detail.html',
         controller:  'PlayerCtrl'
       }).
       when('/games', {
-        templateUrl: '../app/partials/game-list.html',
+        templateUrl: 'app/partials/game-list.html',
         controller:  'GameListCtrl'
       }).
       when('/games/:gameId', {
-        templateUrl: '../app/partials/game-detail.html',
+        templateUrl: 'app/partials/game-detail.html',
         controller:  'GameCtrl'
       }).
       otherwise({
@@ -40,5 +41,4 @@ app.config(['$routeProvider', '$locationProvider',
 
       $locationProvider.html5Mode(true);
       $locationProvider.hashPrefix('!');
-  }]);
-
+}]);

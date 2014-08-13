@@ -67,7 +67,12 @@ module DigiFoosball
 
     get '/api/user/:id' do
       if User.exists? params[:id]
-        return User.find(params[:id]).to_json(:include => { :games => { :include => [:player_home, :player_away]}})
+        return User.find(params[:id]).to_json(:include => {
+                                                :games => {
+                                                  :include => [:player_home,
+                                                               :player_away]
+                                                }
+                                              })
       else
         halt_with_404_not_found 'User not found' 
       end
@@ -79,7 +84,7 @@ module DigiFoosball
 
     get '/api/games/:id' do
       if Game.exists? params[:id]
-        return Game.find(params[:id]).to_json
+        return Game.find(params[:id]).to_json :include => [:player_home, :player_away]
       else
         halt_with_404_not_found 'Game not found' 
       end
@@ -108,6 +113,10 @@ module DigiFoosball
 
       status 200
       body ''
+    end
+
+    error Sinatra::NotFound do
+      redirect to '/'
     end
   end
 end

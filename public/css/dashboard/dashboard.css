@@ -11,7 +11,21 @@
       font-weight: normal;
       font-style: normal;
   }
+  @font-face {
+      font-family: 'JD LED3';
+      src: url('../../fonts/jd_led3.eot');
+      src: url('../../fonts/jd_led3.eot?#iefix') format('embedded-opentype'),
+           url('../../fonts/jd_led3.woff') format('woff'),
+           url('../../fonts/jd_led3.ttf') format('truetype'),
+           url('../../fonts/jd_led3.svg') format('svg');
+      font-weight: normal;
+      font-style: normal;
+  }
   @media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+      font-family: 'JD LED3';
+      src: url('../../fonts/jd_led3.svg') format('svg');
+    }
     @font-face {
       font-family: 'Montserrat';
       src: url('../../fonts/montserrat-regular-webfont.svg') format('svg');
@@ -390,6 +404,46 @@
   box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
   border-radius: 2px;
   border: none;
+}
+.scoreboard {
+  background: #333;
+  color: #fff;
+}
+.score {
+  font-family: "JD LED3";
+  font-size: 200px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.winner {
+  color: green;
+}
+#chart {
+  width: 800px;
+  height: 400px;
+  margin: 0 auto;
+}
+#chart .x.axis {
+  display: none;
+}
+#chart .y.axis path {
+  display: none;
+}
+#chart .y.axis .tick:last-of-type {
+  display: none;
+}
+.widget.score-history {
+  height: 500px;
+}
+.ac-line {
+  stroke-width: 5px!important;
+}
+svg path {
+  /*stroke: #333!important;*/
+}
+
+circle {
+  display: none;
 }
 html,body,.page-wrapper {
   height: 100%;
