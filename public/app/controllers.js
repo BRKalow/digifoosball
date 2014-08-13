@@ -6,19 +6,6 @@ var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
 digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, User) {
     $scope.$parent.title = "Dashboard";
-    /**
-    * EventStream related declarations
-    */
-    $scope.msg = null;
-
-    var handleReceivePush = function (msg) {
-        $scope.$apply(function() {
-            $scope.msg = JSON.parse(msg.data);
-        });
-    };
-
-    var source = new EventSource('/connect');
-    source.addEventListener('message', handleReceivePush, false);
 
     /**
     * Modals
@@ -139,6 +126,22 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Ga
     $scope.game = Game.get({gameId:$routeParams.gameId});
 
     /**
+    * EventStream related declarations
+    */
+    var handleReceivePush = function (msg) {
+        $scope.$apply(function() {
+            var receivedGame = JSON.parse(msg.data);
+            if(receivedGame.id == $routeParams.gameId) {
+                $scope.game = receivedGame;
+                buildChartConfig();
+            }
+        });
+    };
+
+    var source = new EventSource('/connect');
+    source.addEventListener('message', handleReceivePush, false);
+
+    /**
     * Construct score history graph
     */
     var buildDataPoints = function(points) {
@@ -158,7 +161,24 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Ga
         }
 
         return data_points;
-    }
+    };
+
+    var buildChartConfig = function() {
+        $scope.chartType = 'line';
+        $scope.config = {
+            labels: false,
+            title : "",
+            legend : {
+                display: false,
+                position:'right'
+            }
+        };
+
+        $scope.data = {
+            series: [$scope.game.player_home.name, $scope.game.player_away.name],
+            data : buildDataPoints($scope.game.score_history)
+        };
+    };
 
     $scope.chartType = 'line';
     $scope.config = {
@@ -168,12 +188,9 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Ga
             display: false,
             position:'right'
         }
-    }
+    };
 
     $scope.game.$promise.then(function() {
-        $scope.data = {
-            series: [$scope.game.player_home.name, $scope.game.player_away.name],
-            data : buildDataPoints($scope.game.score_history)
-        }
+        buildChartConfig();
     })
 });

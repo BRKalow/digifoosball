@@ -28,12 +28,18 @@ class User < ActiveRecord::Base
     self.wins + self.losses
   end
 
+  def handle_score(team, scorer)
+    team == scorer ? self.goals_scored += 1 : self.goals_given += 1 
+    self.save!
+  end
+
   def handle_game_over(result, game_length)
     if result == 'win'
       self.wins += 1
     elsif result == 'loss'
       self.losses += 1
     end
+    self.games_played += 1
     self.time_played += game_length
 
     self.save!

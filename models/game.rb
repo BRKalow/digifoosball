@@ -29,14 +29,10 @@ class Game < ActiveRecord::Base
   def increment_score(team)
     return if self.game_finished? 
 
-    if team == 'home'
-      self.score_home += 1
-      self.player_home.goals_scored += 1
-    else
-      self.score_away += 1
-      self.player_away.goals_given += 1
-    end
-    
+    team == 'home' ? self.score_home += 1 : self.score_away += 1
+    self.player_home.handle_score 'home', team
+    self.player_away.handle_score 'away', team
+        
     self.score_history == '' ? (self.score_history += team) : (self.score_history += ',' + team)
     self.save!
 

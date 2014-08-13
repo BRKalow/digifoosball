@@ -131,16 +131,21 @@
   }
   ul.sidebar .sidebar-main {
     height: 65px;
+    background: #007A46;
   }
   ul.sidebar .sidebar-main a {
     font-size: 18px;
     line-height: 60px;
+    display: inline;
+    width: auto;
   }
   ul.sidebar .sidebar-main .menu-icon {
     float: right;
     font-size: 18px;
     padding-right: 28px;
     line-height: 60px;
+    cursor: pointer;
+    color: white;
   }
   ul.sidebar .sidebar-title {
     font-size: 12px;
@@ -442,9 +447,6 @@
   display: none;
 }
 #chart .y.axis path {
-  display: none;
-}
-#chart .y.axis .tick:last-of-type {
   display: none;
 }
 .widget.score-history {

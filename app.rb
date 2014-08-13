@@ -20,7 +20,6 @@ module DigiFoosball
     helpers Sinatra::ErrorHelpers
 
     def push_stream(data)
-      puts @@connections
       @@connections.each { |out| out << "data: #{data}\n\n" }
     end
 
@@ -29,7 +28,7 @@ module DigiFoosball
         game = Game.find params[:id]
         game.increment_score params[:team]   
 
-        push_stream game.to_json
+        push_stream game.to_json :include => [:player_home, :player_away]
       end
     end
 
