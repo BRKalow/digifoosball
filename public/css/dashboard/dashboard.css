@@ -474,6 +474,24 @@ circle {
   color: white;
   width: 300px;
 }
+.progress {
+  background-color: white;
+  border-radius: 0px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+.progress-bar {
+  background-color: lightgrey;
+}
+.good-progress {
+  background-color: #00a05b;
+}
+.bar-label {
+  float: left;
+  margin-right: 20px;
+  width: 50px;
+  text-align: right;
+}
 html,body,.page-wrapper {
   height: 100%;
 }

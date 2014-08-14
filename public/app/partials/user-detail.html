@@ -57,10 +57,25 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-6">
+  <div class="col-lg-8">
     <recent-games-index for="user.games" />
   </div>
-  <div class="col-lg-6">
-    <user-list-index for="users" />
+  <div class="col-lg-4">
+    <div class="widget">
+      <div class="widget-title"><i class="fa fa-bar-chart-o"></i> Stats</div>
+      <div class="widget-body large">
+        <h4>Goals</h4>
+        <span class="bar-label">scored</span>
+        <div class="progress">
+          <div class="progress-bar good-progress" role="progressbar" aria-valuenow="{{ user.goals_scored }}" aria-valuemin="0" aria-valuemax="{{ totalGoals }}" ng-style="{width: percent_scored+'%'}">
+          </div> &nbsp; {{ user.goals_scored }}
+        </div>
+        <span class="bar-label">given</span>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{ user.goals_given }}" aria-valuemin="0" aria-valuemax="{{ totalGoals }}" ng-style="{width: percent_given+'%'}">
+          </div> &nbsp; {{ user.goals_given }}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
