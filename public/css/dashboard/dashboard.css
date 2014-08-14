@@ -506,3 +506,28 @@ html,body,.page-wrapper {
 .profile-name {
   padding-top: 15px;
 }
+.game-listing .scoreboard {
+  background: #333;
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px;
+  font-family: "JD LED3";
+  display: inline;
+  font-size: 48px;
+  margin-right: 20px;
+}
+.game-listing a:hover {
+  text-decoration: none;
+}
+.game-listing .media-heading {
+  padding-top: 20px;
+  font-size: 24px;
+  vertical-align: middle;
+}
+.game-listing .media-heading .small {
+  margin-top: 5px;
+}
+.game-listing .gravatar {
+  height: 30px;
+  margin: 0 5px;
+}

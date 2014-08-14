@@ -1,0 +1,19 @@
+<div class="row" ng-repeat="game in games">
+  <div class="col-lg-12">
+    <div class="widget game-listing">
+      <div class="widget-body">
+        <div class="media">
+          <a class="pull-left" href="/games/{{ game.id }}">
+            <div class="scoreboard">{{ game.score_home }} : {{ game.score_away }}</div>
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">
+              <img ng-src="http://www.gravatar.com/avatar/{{ game.player_home.gravatar }}" alt="" class="gravatar" />{{ game.player_home.name }} vs.
+              {{ game.player_away.name }} <img ng-src="http://www.gravatar.com/avatar/{{ game.player_away.gravatar }}" alt="" class="gravatar" />
+              <span class="pull-right small">{{ game.created_at | date:'MMM d, yyyy (h:mma)'}}</span>
+            </h4>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -170,8 +170,9 @@ digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, 
     })
 });
 
-digiFoosballControllers.controller('GameListCtrl', function($scope) {
+digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {
     $scope.$parent.title = "Games";
+    $scope.games = Game.query();
 });
 
 digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Game) {
