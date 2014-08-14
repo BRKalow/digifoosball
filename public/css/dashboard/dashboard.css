@@ -428,6 +428,10 @@
 }
 .scoreboard .name {
   font-size: 24px;
+  width: 200px;
+}
+.scoreboard .name img {
+  height: 65px;
 }
 .scoreboard .widget-body {
   height: 375px!important;
@@ -499,6 +503,6 @@ html,body,.page-wrapper {
   border-radius: 50%;
   height: 65px;
 }
-.name {
+.profile-name {
   padding-top: 15px;
 }
