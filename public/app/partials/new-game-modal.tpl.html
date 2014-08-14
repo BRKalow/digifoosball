@@ -12,12 +12,12 @@
         <div class="form-group">
             <label for="away-team" class="col-sm-3 control-label">Away Player:</label>
             <div class="col-sm-9">
-                <input type="text" ng-model="awayTeam" class="form-control" id="away-team" placeholder="Away player" typeahead="user as user.name for user in users | filter:{name:$viewValue}" typeahead-editable="false">
+                <input type="text" ng-model="awayTeam" class="form-control" id="away-team" placeholder="Away player" typeahead="user as user.name for user in users | filter:{name:$viewValue}" typeahead-editable="false" typeahead-on-select="">
             </div>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="$close()">Start game</button>
+    <button class="btn btn-primary" ng-class="{'disabled':!homeTeam || !awayTeam}" ng-click="$close([homeTeam,awayTeam])">Start game</button>
     <button class="btn btn-link" ng-click="$dismiss()">Cancel</button>
 </div>

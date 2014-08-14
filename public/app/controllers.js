@@ -4,7 +4,7 @@
 
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
-digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, User) {
+digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game) {
     $scope.$parent.title = "Dashboard";
 
     /**
@@ -22,8 +22,13 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
             scope: $scope
         });
 
-        modalInstance.result.then(function() {
+        modalInstance.result.then(function(teams) {
             $scope.hasModalOpen = false;
+            var newGame = new Game({player_home_id:teams[0].id, player_away_id:teams[1].id});
+            newGame.$save();
+            if(!!newGame.id) {
+                $location.path('games/'+newGame.id);
+            }
         }, function(error) {
             $scope.hasModalOpen = false;
         });
@@ -157,7 +162,7 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Ga
                 away_score += 1;
             }
 
-            data_points.push({x: (i+1).toString(), y: [home_score,away_score]})
+            data_points.push({x: (i+1).toString(), y: [home_score,away_score]});
         }
 
         return data_points;
@@ -192,5 +197,5 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Ga
 
     $scope.game.$promise.then(function() {
         buildChartConfig();
-    })
+    });
 });

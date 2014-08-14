@@ -127,7 +127,7 @@
     display: block;
     float: left;
     text-decoration: none;
-    width: 250px;  
+    width: 250px;
   }
   ul.sidebar .sidebar-main {
     height: 65px;
@@ -439,7 +439,7 @@
   color: green;
 }
 #chart {
-  width: 800px;
+  width: 700px;
   height: 400px;
   margin: 0 auto;
 }

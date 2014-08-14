@@ -26,7 +26,7 @@ module DigiFoosball
     def increment_score(id, team)
       if Game.exists? params[:id]
         game = Game.find params[:id]
-        game.increment_score params[:team]   
+        game.increment_score params[:team]
 
         push_stream game.to_json :include => [:player_home, :player_away]
       end
@@ -38,7 +38,7 @@ module DigiFoosball
       headers 'Content-Type' => 'application/json; charset=utf-8'
     end
 
-    # Below be routes 
+    # Below be routes
 
     get '/' do
       content_type 'text/html'
@@ -73,7 +73,7 @@ module DigiFoosball
                                                 }
                                               })
       else
-        halt_with_404_not_found 'User not found' 
+        halt_with_404_not_found 'User not found'
       end
     end
 
@@ -81,11 +81,21 @@ module DigiFoosball
       Game.all.to_json :include => [:player_home, :player_away]
     end
 
+    post '/api/games' do
+      params.merge! JSON.parse(request.env["rack.input"].read)
+
+      game = Game.new params
+      game.save!
+
+      status 201
+      game.to_json :include => [:player_home, :player_away]
+    end
+
     get '/api/games/:id' do
       if Game.exists? params[:id]
         return Game.find(params[:id]).to_json :include => [:player_home, :player_away]
       else
-        halt_with_404_not_found 'Game not found' 
+        halt_with_404_not_found 'Game not found'
       end
     end
 
@@ -108,7 +118,7 @@ module DigiFoosball
 
     # For testing:
     get '/artifical_dc_push/:id/:team' do
-      increment_score params[:id], params[:team] 
+      increment_score params[:id], params[:team]
 
       status 200
       body ''
