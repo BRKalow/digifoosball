@@ -78,6 +78,10 @@ module DigiFoosball
     end
 
     get '/api/games' do
+      if !params.empty?
+        return Game.where(finished:params[:finished].to_i)
+                   .to_json(:include => [:player_home, :player_away])
+      end
       Game.all.to_json :include => [:player_home, :player_away]
     end
 

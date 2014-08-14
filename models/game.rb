@@ -12,6 +12,7 @@ class Game < ActiveRecord::Base
     self.score_home ||= 0
     self.score_away ||= 0
     self.score_history ||= ''
+    self.finished ||= 0
   end
 
   def game_finished?
@@ -44,6 +45,7 @@ class Game < ActiveRecord::Base
   end
 
   def handle_game_over
+    self.finished = 1; self.save!
     self.winner.handle_game_over 'win', self.length
     self.loser.handle_game_over 'loss', self.length
   end

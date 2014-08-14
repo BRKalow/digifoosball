@@ -7,6 +7,8 @@ var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game) {
     $scope.$parent.title = "Dashboard";
 
+    $scope.gameGoingOn = Game.query({finished:'0'}); 
+
     /**
     * Modals
     */

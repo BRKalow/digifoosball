@@ -76,7 +76,10 @@
               </div>
             </div>
             <div class="buttons pull-right">
-              <button class="btn btn-sm btn-info" ng-click="newGameModal()">Start game</button>
+              <span class="notice" ng-if="gameGoingOn[0].id">
+                <a ng-href="games/{{ gameGoingOn[0].id }}">Game currently in progress!</a>
+              </span>
+              <button class="btn btn-sm btn-info" ng-class="{'disabled':gameGoingOn[0].id}" ng-click="newGameModal()">Start game</button>
               <button class="btn btn-sm btn-info" ng-click="newPlayerModal()">Create player</button>
             </div>
           </div>

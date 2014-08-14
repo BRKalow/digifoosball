@@ -458,6 +458,10 @@
 circle {
   display: none;
 }
+.notice *{
+  margin-right: 5px;
+  color: red;
+}
 html,body,.page-wrapper {
   height: 100%;
 }
