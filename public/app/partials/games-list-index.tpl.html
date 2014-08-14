@@ -2,7 +2,7 @@
   <div class="widget-title"><i class="fa fa-trophy"></i> Recent Games</div>
   <div class="widget-body large no-padding">
     <ul class="media-list">
-      <li class="media recent-game" ng-repeat="game in games">
+      <li class="media recent-game" ng-repeat="game in games | orderBy:'id'">
         <a class="pull-left" href="/games/{{ game.id }}">
           <i class="media-object fa fa-trophy fa-3x"></i>
         </a>
