@@ -10,6 +10,42 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     $scope.gameGoingOn = Game.query({finished:'0'}); 
 
     /**
+    * EventStream related declarations
+    */
+    var handleReceivePush = function (msg) {
+        $scope.$apply(function() {
+            var message = JSON.parse(msg.data);
+            if(message.id) {
+                $scope.$broadcast('game-push-received', { receivedGame: message });
+
+                if(message.finished == 0) {
+                    $scope.gameGoingOn[0] = message;
+                } else {
+                    $scope.gameGoingOn[0] = null;
+                }
+            } else if(message.msg) {
+                $scope.changeAlert(message.msg);
+            }
+        });
+    };
+
+    var source = new EventSource('/connect');
+    source.addEventListener('message', handleReceivePush, false);
+
+    /**
+    * Alerts
+    */
+    $scope.alerts = [];
+
+    $scope.changeAlert = function(message) {
+        $scope.alerts[0] = {type: 'info', msg: message};
+    }
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+    /**
     * Modals
     */
     $scope.users = User.query();
@@ -27,10 +63,10 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         modalInstance.result.then(function(teams) {
             $scope.hasModalOpen = false;
             var newGame = new Game({player_home_id:teams[0].id, player_away_id:teams[1].id});
-            newGame.$save();
-            if(!!newGame.id) {
-                $location.path('games/'+newGame.id);
-            }
+            newGame.$save(function(g, headers) {
+                $scope.gameGoingOn[0] = g;
+                $location.path('games/'+g.id);
+            });
         }, function(error) {
             $scope.hasModalOpen = false;
         });
@@ -135,18 +171,13 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Ga
     /**
     * EventStream related declarations
     */
-    var handleReceivePush = function (msg) {
-        $scope.$apply(function() {
-            var receivedGame = JSON.parse(msg.data);
-            if(receivedGame.id == $routeParams.gameId) {
-                $scope.game = receivedGame;
-                buildChartConfig();
-            }
-        });
-    };
-
-    var source = new EventSource('/connect');
-    source.addEventListener('message', handleReceivePush, false);
+    $scope.$on('game-push-received', function(event, args) {
+        var receivedGame = args.receivedGame;
+        if(receivedGame.id == $routeParams.gameId) {
+            $scope.game = receivedGame;
+            buildChartConfig();
+        }
+    });
 
     /**
     * Construct score history graph

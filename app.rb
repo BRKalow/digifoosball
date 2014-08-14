@@ -88,11 +88,17 @@ module DigiFoosball
     post '/api/games' do
       params.merge! JSON.parse(request.env["rack.input"].read)
 
-      game = Game.new params
-      game.save!
+      game = Game.new params; game.save!
 
       status 201
-      game.to_json :include => [:player_home, :player_away]
+
+      message = Hash.new; message = {:msg => 'A game has started!'}
+      push_stream message.to_json
+
+      game = game.to_json :include => [:player_home, :player_away]
+      push_stream game
+
+      return game
     end
 
     get '/api/games/:id' do

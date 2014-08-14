@@ -33,7 +33,7 @@
         <li class="sidebar-main">
           <a href="/">
             <img src="img/logo.png" alt="Digi" style="max-height:45px;"/>
-            &nbsp;&nbsp;Digi Foosball
+            Digi Foosball
           </a>
             <span class="menu-icon glyphicon glyphicon-transfer" ng-click="toggleSidebar()"></span>
           </a>
@@ -96,5 +96,8 @@
       </div><!-- End Page Content -->
     </div><!-- End Content Wrapper -->
   </div><!-- End Page Wrapper -->
+  <alert ng-repeat="alert in alerts" close="closeAlert($index)">
+    {{ alert.msg }}
+  </alert>
 </body>
 </html>
