@@ -7,7 +7,7 @@ var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game) {
     $scope.$parent.title = "Dashboard";
 
-    $scope.gameGoingOn = Game.query({finished:'0'}); 
+    $scope.gameGoingOn = Game.query({finished:'0'});
 
     /**
     * EventStream related declarations
@@ -62,6 +62,10 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 
         modalInstance.result.then(function(teams) {
             $scope.hasModalOpen = false;
+            if(teams[0].id == teams[1].id) {
+                $scope.changeAlert('You can\'t create a game with one person!');
+                return;
+            }
             var newGame = new Game({player_home_id:teams[0].id, player_away_id:teams[1].id});
             newGame.$save(function(g, headers) {
                 $scope.gameGoingOn[0] = g;

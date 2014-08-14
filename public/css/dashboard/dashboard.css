@@ -495,3 +495,10 @@ circle {
 html,body,.page-wrapper {
   height: 100%;
 }
+.gravatar {
+  border-radius: 50%;
+  height: 65px;
+}
+.name {
+  padding-top: 15px;
+}

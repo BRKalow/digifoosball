@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :away_games, :class_name => 'Game', :foreign_key => 'player_away_id'
 
   after_initialize :set_defaults
+  after_create :create_gravatar_hash
 
   def games
     home_games + away_games
@@ -18,8 +19,14 @@ class User < ActiveRecord::Base
     self.goals_scored ||= 0
     self.goals_given ||= 0
     self.time_played ||= 0
+    self.gravatar ||= 0
   end
-  
+
+  def create_gravatar_hash
+    self.gravatar = Digest::MD5.hexdigest self.email.downcase
+    self.save!
+  end
+
   def win_loss_percentage
     return self.wins.fdiv self.games_played
   end
@@ -29,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def handle_score(team, scorer)
-    team == scorer ? self.goals_scored += 1 : self.goals_given += 1 
+    team == scorer ? self.goals_scored += 1 : self.goals_given += 1
     self.save!
   end
 
