@@ -26,9 +26,11 @@
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="widget">
                     <div class="widget-title"><i class="fa fa-child"></i>{{ game.player_home.name }}</div>
-                    <div class="widget-body small">
+                    <div class="widget-body">
                         Wins: {{ game.player_home.wins }}<br/>
-                        Losses: {{ game.player_home.losses }}
+                        Losses: {{ game.player_home.losses }}<br/>
+                        Rating: {{ game.player_home.rating }}
+                        <span ng-class="{'winner': game.score_home == 5,'loser': game.score_away == 5}" ng-if="game.finished">({{ game.home_rating_change }})</span>
                     </div>
                 </div>
             </div>
@@ -37,9 +39,11 @@
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="widget">
                     <div class="widget-title"><i class="fa fa-child"></i>{{ game.player_away.name }}</div>
-                    <div class="widget-body small">
+                    <div class="widget-body">
                         Wins: {{ game.player_away.wins }}<br/>
-                        Losses: {{ game.player_away.losses }}
+                        Losses: {{ game.player_away.losses }}<br/>
+                        Rating: {{ game.player_away.rating }}
+                        <span ng-class="{'winner': game.score_away == 5,'loser': game.score_home == 5}" ng-if="game.finished">({{ game.away_rating_change }})</span>
                     </div>
                 </div>
             </div>

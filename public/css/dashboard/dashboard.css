@@ -445,6 +445,9 @@
 .winner {
   color: green;
 }
+.loser {
+  color: red;
+}
 #chart {
   width: 700px;
   height: 400px;

@@ -13,6 +13,8 @@ class Game < ActiveRecord::Base
     self.score_away ||= 0
     self.score_history ||= ''
     self.finished ||= 0
+    self.home_rating_change ||= 0
+    self.away_rating_change ||= 0
   end
 
   def game_finished?
@@ -45,8 +47,37 @@ class Game < ActiveRecord::Base
   end
 
   def handle_game_over
+    self.determine_rating_change
     self.finished = 1; self.save!
-    self.winner.handle_game_over 'win', self.length, self.loser.rating
-    self.loser.handle_game_over 'loss', self.length, self.winner.rating
+    self.winner.handle_game_over 'win', self.length
+    self.loser.handle_game_over 'loss', self.length
+  end
+
+  def determine_rating_change
+    winner_rating = self.winner.rating
+    loser_rating = self.loser.rating
+
+    rating_diff = winner_rating - loser_rating
+    exp = -1.0 * rating_diff / 400.0
+    odds = 1.0 / (1.0 + 10 ** exp)
+
+    if winner_rating < 2100
+      k = 40
+    elsif winner_rating >= 2100 && winner_rating < 2400
+      k = 28
+    else
+      k = 16
+    end
+
+    self.winner.rating = winner_rating + k * (1.0 - odds)
+    self.loser.rating = loser_rating - (self.winner.rating - winner_rating)
+
+    if self.winner == self.player_home
+      self.home_rating_change = self.winner.rating - winner_rating
+      self.away_rating_change = loser_rating - self.loser.rating
+    else
+      self.home_rating_change = loser_rating - self.loser.rating
+      self.away_rating_change = self.winner.rating - winner_rating
+    end
   end
 end
