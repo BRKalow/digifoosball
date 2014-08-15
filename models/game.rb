@@ -54,6 +54,7 @@ class Game < ActiveRecord::Base
   end
 
   def determine_rating_change
+    # Using the Elo Algorithm
     winner_rating = self.winner.rating
     loser_rating = self.loser.rating
 

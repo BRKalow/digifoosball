@@ -4,46 +4,38 @@
 
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
-digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game) {
+digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game, Alert, Stream) {
     $scope.$parent.title = "Dashboard";
 
     $scope.gameGoingOn = Game.query({finished:'0'});
 
     /**
-    * EventStream related declarations
+    * Signalling
     */
-    var handleReceivePush = function (msg) {
+    $scope.$on('push-received', function(event, args) {
         $scope.$apply(function() {
-            var message = JSON.parse(msg.data);
-            if(message.id) {
-                $scope.$broadcast('game-push-received', { receivedGame: message });
-
-                if(message.finished == 0) {
-                    $scope.gameGoingOn[0] = message;
+            if(args.message.id) {
+                $scope.$broadcast('game-push-received', { receivedGame: args.message });
+                if(args.message.finished == 0) {
+                    $scope.gameGoingOn[0] = args.message;
                 } else {
                     $scope.gameGoingOn[0] = null;
                 }
-            } else if(message.msg) {
-                $scope.changeAlert(message.msg);
+            } else if(args.message.msg) {
+                Alert.setAlert(args.message.msg);
             }
         });
-    };
+    });
 
-    var source = new EventSource('/connect');
-    source.addEventListener('message', handleReceivePush, false);
+    $scope.$on('refresh-users', function(event, args) {
+        $scope.users = User.query();
+    });
 
     /**
     * Alerts
     */
-    $scope.alerts = [];
-
-    $scope.changeAlert = function(message) {
-        $scope.alerts[0] = {type: 'info', msg: message};
-    };
-
-    $scope.closeAlert = function(index) {
-        $scope.alerts.splice(index, 1);
-    };
+    $scope.alerts = Alert.getAlert();
+    $scope.closeAlert = function() { Alert.closeAlert(0); };
 
     /**
     * Modals
@@ -63,7 +55,7 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         modalInstance.result.then(function(teams) {
             $scope.hasModalOpen = false;
             if(teams[0].id == teams[1].id) {
-                $scope.changeAlert('You can\'t create a game with one person!');
+                Alert.setAlert('You can\'t create a game with one person!');
                 return;
             }
             var newGame = new Game({player_home_id:teams[0].id, player_away_id:teams[1].id});
@@ -97,13 +89,6 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
             $scope.hasModalOpen = false;
         });
     };
-
-    /**
-    * Signaling
-    */
-    $scope.$on('refresh-users', function(event, args) {
-        $scope.users = User.query();
-    });
 
     /**
      * Sidebar Toggle & Cookie Control
