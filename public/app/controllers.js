@@ -90,12 +90,20 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
             $scope.hasModalOpen = false;
             var newUser = new User({name: params[0], email: params[1], department: params[2]});
             newUser.$save(function(u, headers) {
+                $scope.$emit('refresh-users');
                 $location.path('players/'+u.id);
             });
         }, function(error) {
             $scope.hasModalOpen = false;
         });
     };
+
+    /**
+    * Signaling
+    */
+    $scope.$on('refresh-users', function(event, args) {
+        $scope.users = User.query();
+    });
 
     /**
      * Sidebar Toggle & Cookie Control
