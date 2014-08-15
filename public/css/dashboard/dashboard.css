@@ -534,3 +534,9 @@ html,body,.page-wrapper {
   height: 30px;
   margin: 0 5px;
 }
+.user-listing-container .row:nth-of-type(1) .widget-body {
+  background-color: gold;
+}
+.user-listing .media-heading {
+  margin-top: 10px;
+}

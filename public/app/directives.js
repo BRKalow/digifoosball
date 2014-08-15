@@ -29,5 +29,14 @@ app.directive('recentGamesIndex', function() {
     scope: {games: '=for'},
     templateUrl: 'app/partials/games-list-index.tpl.html',
     replace: true
-  }
-})
+  };
+});
+
+app.directive('gravatar', function() {
+  return {
+    restrict: 'AE',
+    scope: {hash: '=for', gClass: '=gClass'},
+    repalce: 'false',
+    template: '<img ng-src="http://www.gravatar.com/avatar/{{ hash }}" alt="" class="gravatar {{ gClas }}" />'
+  };
+});

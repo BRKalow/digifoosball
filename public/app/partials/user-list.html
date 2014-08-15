@@ -1,0 +1,21 @@
+<div class="user-listing-container">
+  <div class="row" ng-repeat="user in users | orderBy:'rating':true">
+    <div class="col-lg-12">
+      <div class="widget user-listing">
+        <div class="widget-body">
+          <div class="media">
+            <a class="pull-left" href="/user/{{ user.id }}">
+              <gravatar for="user.gravatar">
+            </a>
+            <div class="media-body">
+              <h4 class="media-heading">
+                {{ user.name }}
+              </h4>
+              <span class="pull-left">
+                {{ user.rating }} | {{ user.games_played }}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

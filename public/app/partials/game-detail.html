@@ -4,11 +4,11 @@
             <div class="widget-body large text-center">
                 <span class="pull-left text-left name">
                     {{ game.player_home.name }}<br/>
-                    <img ng-src="http://www.gravatar.com/avatar/{{ game.player_home.gravatar }}" alt="" class="gravatar" />
+                    <gravatar for="game.player_home.gravatar">
                 </span>
                 <span class="pull-right text-right name">
                     {{ game.player_away.name }}<br/>
-                    <img ng-src="http://www.gravatar.com/avatar/{{ game.player_away.gravatar }}" alt="" class="gravatar" />
+                    <gravatar for="game.player_away.gravatar">
                 </span>
                 <span class="score">
                     <span ng-class="{'winner': game.score_home == 5}">{{ game.score_home }}</span> :
