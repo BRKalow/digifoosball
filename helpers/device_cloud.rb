@@ -59,7 +59,21 @@ module Sinatra
     def self.registered(app)
       app.helpers DeviceCloud::Helpers
 
-      app.set :device_cloud, YAML.load_file('config/device_cloud.yml')
+      if File.file?('/config/device_cloud.yml')
+        app.set :device_cloud, YAML.load_file('config/device_cloud.yml')
+      else
+        device_cloud_hash = Hash.new
+
+        device_cloud_hash = {
+          'username' => ENV['dc_username'],
+          'password' => ENV['dc_password'],
+          'device_id' => ENV['dc_device_id'],
+          'home_input' => ENV['dc_home_input'],
+          'away_input' => ENV['dc_away_input']
+        }
+
+        app.set :device_cloud, device_cloud_hash
+      end
     end
   end
 
