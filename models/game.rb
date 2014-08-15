@@ -46,7 +46,7 @@ class Game < ActiveRecord::Base
 
   def handle_game_over
     self.finished = 1; self.save!
-    self.winner.handle_game_over 'win', self.length
-    self.loser.handle_game_over 'loss', self.length
+    self.winner.handle_game_over 'win', self.length, self.loser.rating
+    self.loser.handle_game_over 'loss', self.length, self.winner.rating
   end
 end

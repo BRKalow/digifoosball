@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
     self.goals_given ||= 0
     self.time_played ||= 0
     self.gravatar ||= 0
+    self.rating ||= 1400
   end
 
   def create_gravatar_hash
@@ -40,7 +41,7 @@ class User < ActiveRecord::Base
     self.save!
   end
 
-  def handle_game_over(result, game_length)
+  def handle_game_over(result, game_length, opponent_rating)
     if result == 'win'
       self.wins += 1
     elsif result == 'loss'
@@ -49,6 +50,30 @@ class User < ActiveRecord::Base
     self.games_played += 1
     self.time_played += game_length
 
+    self.update_rating result, opponent_rating
+
     self.save!
+  end
+
+  def update_rating(result, opponent_rating)
+    winner_rank = result == 'win' ? self.rating : opponent_rating
+    loser_rank = result == 'win' ? opponent_rating : self.rating
+
+    rank_diff = winner_rank - loser_rank
+    exp = -1.0 * rank_diff / 400.0
+    odds = 1.0 / (1.0 + 10 ** exp)
+
+    if winner_rank < 2100
+      k = 40
+    elsif winner_rank >= 2100 && winner_rank < 2400
+      k = 28
+    else
+      k = 16
+    end
+
+    new_winner_rank = winner_rank + k * (1.0 - odds)
+    new_loser_rank = loser_rank - (new_winner_rank - winner_rank)
+
+    result == 'win' ? self.rating = new_winner_rank : self.rating = new_loser_rank
   end
 end

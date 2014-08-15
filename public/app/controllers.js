@@ -39,7 +39,7 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 
     $scope.changeAlert = function(message) {
         $scope.alerts[0] = {type: 'info', msg: message};
-    }
+    };
 
     $scope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);
@@ -167,7 +167,7 @@ digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, 
         $scope.totalGoals = $scope.user.goals_given + $scope.user.goals_scored;
         $scope.percent_scored = (100 * $scope.user.goals_scored / $scope.totalGoals).toFixed(2);
         $scope.percent_given = (100 * $scope.user.goals_given / $scope.totalGoals).toFixed(2);
-    })
+    });
 });
 
 digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {
