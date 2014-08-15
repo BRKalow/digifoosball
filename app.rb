@@ -64,6 +64,19 @@ module DigiFoosball
       User.all.to_json
     end
 
+    post '/api/user' do
+      params.merge! JSON.parse(request.env["rack.input"].read)
+
+      user = User.new params; user.save!
+
+      status 201
+
+      message = Hash.new; message = {:msg => 'A new challenger approaches!'}
+      push_stream message.to_json
+
+      return user.to_json
+    end
+
     get '/api/user/:id' do
       if User.exists? params[:id]
         return User.find(params[:id]).to_json(:include => {

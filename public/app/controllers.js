@@ -86,8 +86,12 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
             scope: $scope
         });
 
-        modalInstance.result.then(function() {
+        modalInstance.result.then(function(params) {
             $scope.hasModalOpen = false;
+            var newUser = new User({name: params[0], email: params[1], department: params[2]});
+            newUser.$save(function(u, headers) {
+                $location.path('players/'+u.id);
+            });
         }, function(error) {
             $scope.hasModalOpen = false;
         });

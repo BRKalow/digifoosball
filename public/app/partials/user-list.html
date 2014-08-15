@@ -5,14 +5,17 @@
         <div class="widget-body">
           <div class="media">
             <a class="pull-left" href="/user/{{ user.id }}">
-              <gravatar for="user.gravatar">
+              <gravatar for="user.gravatar"></gravatar>
             </a>
             <div class="media-body">
               <h4 class="media-heading">
-                {{ user.name }}
+                {{ user.name }} <i class="fa fa-trophy rank-icon"></i>
+                <span class="pull-right">{{ user.rating }}</span>
               </h4>
               <span class="pull-left">
-                {{ user.rating }} | {{ user.games_played }}
+                Games: {{ user.games_played }}, Goals: {{ user.goals_scored }},
+                Minutes: {{ user.time_played }}
+              </span>
             </div>
         </div>
       </div>

@@ -534,8 +534,20 @@ html,body,.page-wrapper {
   height: 30px;
   margin: 0 5px;
 }
-.user-listing-container .row:nth-of-type(1) .widget-body {
-  background-color: gold;
+.rank-icon {
+  display: none;
+}
+.user-listing-container .row:nth-of-type(1) .rank-icon {
+  display: inline;
+  color: gold;
+}
+.user-listing-container .row:nth-of-type(2) .rank-icon {
+  display: inline;
+  color: silver;
+}
+.user-listing-container .row:nth-of-type(3) .rank-icon {
+  display: inline;
+  color: sienna;
 }
 .user-listing .media-heading {
   margin-top: 10px;
