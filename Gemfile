@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'sinatra'
 gem 'sinatra-activerecord'
 gem 'pg'
+gem 'thin'
 gem 'rake'
 
 # Device Cloud
@@ -11,7 +12,6 @@ gem 'rest-client'
 
 group :development do
     gem 'shotgun'
-    gem 'thin'
     gem 'tux'
     gem 'sqlite3'
 end
