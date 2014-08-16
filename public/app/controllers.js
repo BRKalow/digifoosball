@@ -7,14 +7,16 @@ var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game, Alert, Stream) {
     $scope.$parent.title = "Dashboard";
 
-    $scope.gameGoingOn = Game.query({finished:'0'});
+    $scope.gameGoingOn = Game.resource.query({finished:'0'});
 
     /**
-    * Signalling
+    * Stream
     */
     Stream.onmessage(function(data) {
         if(data.id) {
             $scope.$broadcast('game-push-received', { receivedGame: data });
+            Game.refreshGames();
+            User.refreshUsers();
             if(data.finished == 0) {
                 $scope.gameGoingOn[0] = data;
             } else {
@@ -23,10 +25,6 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         } else if(data.msg) {
             Alert.setAlert(data.msg);
         }
-    });
-
-    $scope.$on('refresh-users', function(event, args) {
-        $scope.users = User.query();
     });
 
     /**
@@ -38,7 +36,7 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     /**
     * Modals
     */
-    $scope.users = User.query();
+    $scope.users = User.allUsers();
     $scope.hasModalOpen = false;
     $scope.newGameModal = function() {
 
@@ -56,8 +54,9 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
                 Alert.setAlert('You can\'t create a game with one person!');
                 return;
             }
-            var newGame = new Game({player_home_id:teams[0].id, player_away_id:teams[1].id});
+            var newGame = new Game.resource({player_home_id:teams[0].id, player_away_id:teams[1].id});
             newGame.$save(function(g, headers) {
+                Game.refreshGames();
                 $scope.gameGoingOn[0] = g;
                 $location.path('games/'+g.id);
             });
@@ -78,9 +77,9 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 
         modalInstance.result.then(function(params) {
             $scope.hasModalOpen = false;
-            var newUser = new User({name: params[0], email: params[1], department: params[2]});
+            var newUser = new User.resource({name: params[0], email: params[1], department: params[2]});
             newUser.$save(function(u, headers) {
-                $scope.$emit('refresh-users');
+                User.refreshUsers();
                 $location.path('players/'+u.id);
             });
         }, function(error) {
@@ -146,8 +145,8 @@ digiFoosballControllers.controller('IndexCtrl', function($scope, Statistics, Use
     };
     var statsTimer = setInterval(updateStats, 10000);
 
-    $scope.users = User.query();
-    $scope.games = Game.query();
+    $scope.users = User.allUsers();
+    $scope.games = Game.allGames();
 });
 
 digiFoosballControllers.controller('PlayerListCtrl', function($scope) {
@@ -156,7 +155,7 @@ digiFoosballControllers.controller('PlayerListCtrl', function($scope) {
 
 digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User) {
     $scope.$parent.title = "Player";
-    $scope.user = User.get({userId:$routeParams.userId});
+    $scope.user = User.resource.get({userId:$routeParams.userId});
 
     $scope.user.$promise.then(function() {
         $scope.totalGoals = $scope.user.goals_given + $scope.user.goals_scored;
@@ -167,12 +166,12 @@ digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, 
 
 digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {
     $scope.$parent.title = "Games";
-    $scope.games = Game.query();
+    $scope.games = Game.allGames();
 });
 
 digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Game) {
     $scope.$parent.title = "Game";
-    $scope.game = Game.get({gameId:$routeParams.gameId});
+    $scope.game = Game.resource.get({gameId:$routeParams.gameId});
 
     /**
     * EventStream related declarations

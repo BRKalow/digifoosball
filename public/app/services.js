@@ -5,11 +5,37 @@
 var digiFoosballServices = angular.module('digiFoosballServices', ['ngResource']);
 
 digiFoosballServices.factory('User', function($resource) {
-    return $resource('/api/user/:userId', {userId:'@id'});
+    var users = [];
+    var resource = $resource('/api/user/:userId', {userId:'@id'});
+    return {
+        resource: resource,
+        allUsers: function() {
+            if(users.length == 0) {
+                users = resource.query();
+            }
+            return users;
+        },
+        refreshUsers: function() {
+          users = resource.query();
+        }
+    };
 });
 
 digiFoosballServices.factory('Game', function($resource) {
-    return $resource('/api/games/:gameId', {gameId:'@id'});
+    var games = [];
+    var resource = $resource('/api/games/:gameId', {gameId:'@id'});
+    return {
+        resource: resource,
+        allGames: function() {
+            if(games.length == 0) {
+                games = resource.query();
+            }
+            return games;
+        },
+        refreshGames: function() {
+            games = resource.query();
+        }
+    };
 });
 
 digiFoosballServices.service('Statistics', function($http,$q) {
