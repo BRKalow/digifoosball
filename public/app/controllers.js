@@ -12,19 +12,17 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     /**
     * Signalling
     */
-    $scope.$on('push-received', function(event, args) {
-        $scope.$apply(function() {
-            if(args.message.id) {
-                $scope.$broadcast('game-push-received', { receivedGame: args.message });
-                if(args.message.finished == 0) {
-                    $scope.gameGoingOn[0] = args.message;
-                } else {
-                    $scope.gameGoingOn[0] = null;
-                }
-            } else if(args.message.msg) {
-                Alert.setAlert(args.message.msg);
+    Stream.onmessage(function(data) {
+        if(data.id) {
+            $scope.$broadcast('game-push-received', { receivedGame: data });
+            if(data.finished == 0) {
+                $scope.gameGoingOn[0] = data;
+            } else {
+                $scope.gameGoingOn[0] = null;
             }
-        });
+        } else if(data.msg) {
+            Alert.setAlert(data.msg);
+        }
     });
 
     $scope.$on('refresh-users', function(event, args) {
