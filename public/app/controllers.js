@@ -9,6 +9,14 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 
     $scope.gameGoingOn = Game.resource.query({finished:'0'});
 
+    $scope.loading = false;
+    $scope.$on('$routeChangeStart', function(scope, next, current) {
+        $scope.loading = true;
+    });
+    $scope.$on('$routeChangeSuccess', function(scope, next, current) {
+        setTimeout(function() { $scope.$apply(function() { $scope.loading = false; }); }, 400);
+    });
+
     /**
     * Stream
     */
@@ -94,34 +102,25 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 
     $scope.getWidth = function() { return window.innerWidth; };
 
-    $scope.$watch($scope.getWidth, function(newValue, oldValue)
-    {
-        if(newValue >= mobileView)
-        {
-            if(angular.isDefined($cookieStore.get('toggle')))
-            {
-                if($cookieStore.get('toggle') === false)
+    $scope.$watch($scope.getWidth, function(newValue, oldValue) {
+        if(newValue >= mobileView) {
+            if(angular.isDefined($cookieStore.get('toggle'))) {
+                if($cookieStore.get('toggle') === false) {
                     $scope.toggle = false;
-
-                else
+                } else {
                     $scope.toggle = true;
-            }
-            else
-            {
+                }
+            } else {
                 $scope.toggle = true;
             }
-        }
-        else
-        {
+        } else {
             $scope.toggle = false;
         }
 
     });
 
-    $scope.toggleSidebar = function()
-    {
+    $scope.toggleSidebar = function() {
         $scope.toggle = ! $scope.toggle;
-
         $cookieStore.put('toggle', $scope.toggle);
     };
 

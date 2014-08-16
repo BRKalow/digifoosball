@@ -88,8 +88,8 @@
         <!-- End Header Bar -->
 
         <!-- Main Content -->
-
-          <div ng-view></div>
+          <loading ng-if="loading"></loading>
+          <div ng-view ng-if="!loading"></div>
 
         <!-- End Main Content -->
 
