@@ -28,8 +28,10 @@
     overflow-y: scroll;
   }
   body {
-    background: #f3f3f3;
+    background: #fff;
     font-family: benton-sans, 'Helvetica Neue', helvetica, arial, sans-serif;
+    letter-spacing: 0.5px;
+    color: #56565D;
   }
   .row {
     margin-left: 0;
@@ -66,6 +68,18 @@
   .red {
     background: #ae2323 !important;
   }
+  .green-icon {
+    color: #23ae89 !important;
+  }
+  .blue-icon {
+    color: #2361ae !important;
+  }
+  .orange-icon {
+    color: #d3a938 !important;
+  }
+  .red-icon {
+    color: #ae2323 !important;
+  }
 
   .form-horizontal .has-feedback .fa-form-control-feedback {
     position: absolute;
@@ -82,10 +96,11 @@
 
 /* Sidebar */
   ul.sidebar .sidebar-main a, .sidebar-footer, ul.sidebar .sidebar-list a:hover {
-    background: #007A46;
+    background: rgba(255,255,255,0);
   }
   #sidebar-wrapper {
     background: #00a05b;
+    background-image: radial-gradient(at 40% 0%, #4BA380 0%, rgba(76, 164, 128, 0) 100%), radial-gradient(at 0% 100%, rgba(72, 160, 116, 0.8) 0%, rgba(72, 160, 116, 0) 50%);;
   }
   ul.sidebar .sidebar-title {
     color: #00D67A;
@@ -116,13 +131,19 @@
   }
   ul.sidebar .sidebar-main {
     height: 65px;
-    background: #007A46;
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
   }
   ul.sidebar .sidebar-main a {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 60px;
     display: inline;
     width: auto;
+    font-weight: 400;
+  }
+  ul.sidebar .sidebar-main a img {
+    margin-top: -4px;
+    margin-right: 5px;
   }
   ul.sidebar .sidebar-main .menu-icon {
     float: right;
@@ -152,6 +173,7 @@
   ul.sidebar .sidebar-list a {
     text-indent: 25px;
     font-size: 15px;
+    font-weight: 300;
     color: #fff;
     line-height: 40px;
   }
@@ -214,6 +236,7 @@
     height: 60px;
     background: #fff;
     margin-bottom: 15px;
+    border-bottom: 1px solid #ededee;
   }
   .row.header > div:last-child {
     padding-right: 0;
@@ -306,12 +329,10 @@
     background: #ffffff;
     border: 1px solid transparent;
     border-radius: 2px;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   }
   .widget .widget-title {
     color: #767676;
-    background-color: #f6f6f6;
+    background-color: transparent;
     padding: 10px 15px;
     border-bottom: 1px solid #e9e9e9;
   }
@@ -360,7 +381,7 @@
     margin-bottom: 10px;
   }
   .widget .widget-icon {
-    background: #30426a;
+    background: transparent;
     width: 65px;
     height: 65px;
     border-radius: 50%;
@@ -414,7 +435,7 @@
 }
 .scoreboard .name {
   font-size: 24px;
-  width: 200px;
+  width: 180px;
 }
 .scoreboard .name img {
   height: 65px;
@@ -511,10 +532,12 @@ html,body,.page-wrapper {
 .game-listing .media-heading {
   padding-top: 20px;
   font-size: 24px;
+  font-weight: 300;
   vertical-align: middle;
 }
 .game-listing .media-heading .small {
   margin-top: 5px;
+  font-weight: 300;
 }
 .game-listing .gravatar {
   height: 30px;
@@ -522,6 +545,9 @@ html,body,.page-wrapper {
 }
 .rank-icon {
   display: none;
+}
+.user-listing, .game-listing {
+  border-bottom: 1px solid #e9e9e9;
 }
 .user-listing-container .row:nth-of-type(1) .rank-icon {
   display: inline;
