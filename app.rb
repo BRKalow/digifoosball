@@ -132,6 +132,7 @@ module DigiFoosball
     end
 
     put '/receive_from_dc' do
+      params.merge! JSON.parse(request.env["rack.input"].read)
       #resp = parse_dc_response
       #if resp[:should_update_score] increment_score resp[:id], resp[:team] end
       puts params
