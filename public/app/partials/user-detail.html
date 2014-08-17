@@ -64,17 +64,11 @@
     <div class="widget">
       <div class="widget-title"><i class="fa fa-bar-chart-o"></i> Stats</div>
       <div class="widget-body large">
-        <h4>Goals</h4>
-        <span class="bar-label">scored</span>
-        <div class="progress">
-          <div class="progress-bar good-progress" role="progressbar" aria-valuenow="{{ user.goals_scored }}" aria-valuemin="0" aria-valuemax="{{ totalGoals }}" ng-style="{width: percent_scored+'%'}">
-          </div> &nbsp; {{ user.goals_scored }}
-        </div>
-        <span class="bar-label">given</span>
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="{{ user.goals_given }}" aria-valuemin="0" aria-valuemax="{{ totalGoals }}" ng-style="{width: percent_given+'%'}">
-          </div> &nbsp; {{ user.goals_given }}
-        </div>
+        <user-stat-bar title="'Games'" title-positive="'wins'" title-negative="'losses'" positive-value="user.wins" negative-value="user.losses"
+                       max-value="user.games_played" percent-positive="percent_wins" percent-negative="percent_losses">
+        </user-stat-bar>
+        <user-stat-bar title="'Goals'" title-positive="'scored'" title-negative="'given'" positive-value="user.goals_scored" negative-value="user.goals_given" max-value="totalGoals" percent-positive="percent_scored" percent-negative="percent_given">
+        </user-stat-bar>
       </div>
     </div>
   </div>

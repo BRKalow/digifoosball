@@ -40,3 +40,14 @@ app.directive('gravatar', function() {
     template: '<img ng-src="http://www.gravatar.com/avatar/{{ hash }}" alt="" class="gravatar {{ gClas }}" />'
   };
 });
+
+app.directive('userStatBar', function() {
+  return {
+    restrict: 'AE',
+    scope: {title: '=', titlePositive: '=', titleNegative: '=',
+            positiveValue: '=', negativeValue: '=', maxValue: '=',
+            percentPositive: '=', percentNegative: '='},
+    replace: true,
+    templateUrl: 'app/partials/user-stat-bars.tpl.html'
+  };
+});

@@ -160,6 +160,10 @@ digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, 
         $scope.totalGoals = $scope.user.goals_given + $scope.user.goals_scored;
         $scope.percent_scored = (100 * $scope.user.goals_scored / $scope.totalGoals).toFixed(2);
         $scope.percent_given = (100 * $scope.user.goals_given / $scope.totalGoals).toFixed(2);
+
+        $scope.totalGames = $scope.user.games_played;
+        $scope.percent_wins = (100 * $scope.user.wins / $scope.user.games_played).toFixed(2);
+        $scope.percent_losses = (100 * $scope.user.losses / $scope.user.games_played).toFixed(2);
     });
 });
 

@@ -538,3 +538,10 @@ html,body,.page-wrapper {
 .user-listing .media-heading {
   margin-top: 10px;
 }
+.btn {
+  color: #46b8da;
+  background-color: white;
+}
+.btn.disabled {
+  color: white;
+}

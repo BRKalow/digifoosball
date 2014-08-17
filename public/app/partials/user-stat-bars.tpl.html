@@ -1,0 +1,13 @@
+<div>
+  <h4>{{ title }}</h4>
+  <span class="bar-label">{{ titlePositive }}</span>
+  <div class="progress">
+    <div class="progress-bar good-progress" role="progressbar" aria-valuenow="{{ postiveValue }}" aria-valuemin="0" aria-valuemax="{{ maxValue }}" ng-style="{width: percentPositive+'%'}">
+    </div> &nbsp; {{ positiveValue }}
+  </div>
+  <span class="bar-label">{{ titleNegative }}</span>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{ negativeValue }}" aria-valuemin="0" aria-valuemax="{{ maxValue }}" ng-style="{width: percentNegative+'%'}">
+    </div> &nbsp; {{ negativeValue }}
+  </div>
+</div>
