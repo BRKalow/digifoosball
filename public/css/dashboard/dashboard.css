@@ -323,6 +323,7 @@
   }
   .widget .widget-body {
     padding: 20px;
+    overflow-x: scroll;
   }
   .widget .widget-body table thead * {
     font-size: 14px !important;

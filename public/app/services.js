@@ -131,7 +131,9 @@ digiFoosballServices.factory('scoreChart', function() {
             legend : {
                 display: false,
                 position:'right'
-            }
+            },
+            lineCurveType: 'basis',
+            colors: ['red','black']
         };
         data = {
             series: [playerHomeName, playerAwayName],
