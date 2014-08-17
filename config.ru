@@ -1,3 +1,5 @@
+$stdout.sync = true
+
 require 'rubygems'
 
 Bundler.require
