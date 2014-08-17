@@ -23,7 +23,7 @@ module Sinatra
         when 'get'
           RestClient.get url, *args
         when 'post'
-          RestClient.post url, *args 
+          RestClient.post url, *args
         when 'put'
           RestClient.put url, *args
         when 'delete'
@@ -52,7 +52,20 @@ module Sinatra
           }
         end
 
-        request_to_device_cloud 'put', 'ws/Monitor', post_dat.to_xml
+        request_to_device_cloud 'put', 'ws/Monitor', post_data.to_xml
+      end
+
+      def parse_dc_response(data)
+        input = data["streamId"].split('/')[1..2].join('/')
+        value = data["data"]
+        should_increment_score = value == 1
+        if (Game.first.finished == 1) then should_increment_score = false end
+
+        parsed = Hash.new; parsed = {
+          :team => (input == options.device_cloud['home_input'] ? 'home' : 'away'),
+          :should_increment_score => should_increment_score,
+          :id => Game.first.id
+        }
       end
     end
 
