@@ -5,7 +5,10 @@
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
 digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game, Alert, Stream) {
-    $scope.$parent.title = "Dashboard";
+    $scope.title = "Dashboard";
+    $scope.$on('change-title', function(event, args) {
+        $scope.title = args.title;
+    });
 
     $scope.gameGoingOn = Game.resource.query({finished:'0'});
 
@@ -128,7 +131,7 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 });
 
 digiFoosballControllers.controller('IndexCtrl', function($scope, Statistics, User, Game) {
-    $scope.$parent.title = 'Dashboard';
+    $scope.$emit('change-title', {title: 'Dashboard'});
     /**
     * Statistics
     */
@@ -149,11 +152,11 @@ digiFoosballControllers.controller('IndexCtrl', function($scope, Statistics, Use
 });
 
 digiFoosballControllers.controller('PlayerListCtrl', function($scope) {
-    $scope.$parent.title = "Players";
+    $scope.$emit('change-title', {title: 'Players'});
 });
 
 digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User) {
-    $scope.$parent.title = "Player";
+    $scope.$emit('change-title', {title: 'Player'});
     $scope.user = User.resource.get({userId:$routeParams.userId});
 
     $scope.user.$promise.then(function() {
@@ -168,12 +171,12 @@ digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, 
 });
 
 digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {
-    $scope.$parent.title = "Games";
+    $scope.$emit('change-title', {title: 'Games'});
     $scope.games = Game.allGames();
 });
 
 digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Game, scoreChart) {
-    $scope.$parent.title = "Game";
+    $scope.$emit('change-title', {title: 'Game'});
     $scope.game = Game.resource.get({gameId:$routeParams.gameId});
     $scope.chart = scoreChart.getChart();
     $scope.rebuildChart = function() {
