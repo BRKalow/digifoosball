@@ -14,8 +14,8 @@ module Sinatra
 
       def request_to_device_cloud(method, resource, *args)
         url = build_base_url(
-          options.device_cloud['username'],
-          options.device_cloud['password'],
+          settings.device_cloud['username'],
+          settings.device_cloud['password'],
           resource
         )
 
@@ -61,7 +61,7 @@ module Sinatra
         should_increment_score = value == 1
         latest_game = Game.first
         id = 0
-        
+
         if latest_game
           if (latest_game.finished == 1)
             should_increment_score = false 
@@ -70,7 +70,7 @@ module Sinatra
         end
 
         parsed = Hash.new; parsed = {
-          :team => (input == options.device_cloud['home_input'] ? 'home' : 'away'),
+          :team => (input == settings.device_cloud['home_input'] ? 'home' : 'away'),
           :should_increment_score => should_increment_score,
           :id => id 
         }
