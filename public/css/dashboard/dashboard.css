@@ -344,7 +344,6 @@
   }
   .widget .widget-body {
     padding: 20px;
-    overflow-x: scroll;
   }
   .widget .widget-body table thead * {
     font-size: 14px !important;
@@ -461,8 +460,9 @@
 #chart .y.axis path {
   display: none;
 }
-.widget.score-history {
+.widget .score-history {
   height: 500px;
+  overflow-x: auto;
 }
 .ac-line {
   stroke-width: 5px!important;
