@@ -59,12 +59,20 @@ module Sinatra
         input = data["streamId"].split('/')[1..2].join('/')
         value = data["data"]
         should_increment_score = value == 1
-        if (Game.first.finished == 1) then should_increment_score = false end
+        latest_game = Game.first
+        id = 0
+        
+        if latest_game
+          if (latest_game.finished == 1)
+            should_increment_score = false 
+          end
+          id = latest_game.id
+        end
 
         parsed = Hash.new; parsed = {
           :team => (input == options.device_cloud['home_input'] ? 'home' : 'away'),
           :should_increment_score => should_increment_score,
-          :id => Game.first.id
+          :id => id 
         }
       end
     end
