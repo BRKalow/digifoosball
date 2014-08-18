@@ -24,9 +24,9 @@ module DigiFoosball
     end
 
     def increment_score(id, team)
-      if Game.exists? params[:id]
-        game = Game.find params[:id]
-        game.increment_score params[:team]
+      if Game.exists? id
+        game = Game.find id
+        game.increment_score team
 
         push_stream game.to_json :include => [:player_home, :player_away]
       end
@@ -134,8 +134,9 @@ module DigiFoosball
     put '/receive_from_dc' do
       params.merge! JSON.parse(request.env["rack.input"].read)
       resp = parse_dc_response params["Document"]["Msg"]["DataPoint"]
-      puts resp
-      if resp[:should_increment_score] then increment_score resp[:id], resp[:team] end
+      if resp[:should_increment_score]
+        increment_score resp[:id], resp[:team] 
+      end
       status 200
       body ''
     end
