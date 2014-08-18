@@ -56,7 +56,7 @@ module Sinatra
       end
 
       def parse_dc_response(data)
-        input = data["streamId"].split('/')[1..2].join('/')
+        input = data["streamId"].split('/')[3]
         value = data["data"]
         should_increment_score = value == 1
         latest_game = Game.first
