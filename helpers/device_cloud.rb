@@ -58,9 +58,13 @@ module Sinatra
       def parse_dc_response(data)
         input = data["streamId"].split('/')[3]
         value = data["data"]
-        should_increment_score = value == 1
+        should_increment_score = (value == 1 && @@previous_value != 1)
         latest_game = Game.first
         id = 0
+
+        # this ensures that if a sensor gets stuck it won't constantly
+        # add to score
+        @@previous_value = value
 
         if latest_game
           if (latest_game.finished == 1)

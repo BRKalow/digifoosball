@@ -33,6 +33,7 @@ module DigiFoosball
     end
 
     @@connections = []
+    @@previous_value = 0
 
     before do
       headers 'Content-Type' => 'application/json; charset=utf-8'
