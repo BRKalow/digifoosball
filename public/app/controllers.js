@@ -10,6 +10,13 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         $scope.title = args.title;
     });
 
+    $scope.$on('users-refreshed', function(event, args) {
+        $scope.users = User.allUsers();
+    });
+    $scope.$on('games-refreshed', function(event, args) {
+        $scope.games = Game.allGames();
+    });
+
     $scope.gameGoingOn = Game.resource.query({finished:'0'});
 
     $scope.loading = false;
@@ -148,11 +155,21 @@ digiFoosballControllers.controller('IndexCtrl', function($scope, Statistics, Use
     var statsTimer = setInterval(updateStats, 10000);
 
     $scope.users = User.allUsers();
+    $scope.$on('users-refreshed', function(event, args) {
+        $scope.users = User.allUsers();
+    });
+
     $scope.games = Game.allGames();
+    $scope.$on('games-refreshed', function(event, args) {
+        $scope.games = Game.allGames();
+    });
 });
 
 digiFoosballControllers.controller('PlayerListCtrl', function($scope) {
     $scope.$emit('change-title', {title: 'Players'});
+    $scope.$on('users-refreshed', function(event, args) {
+        $scope.users = User.allUsers();
+    });
 });
 
 digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User) {
@@ -173,6 +190,9 @@ digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, 
 digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {
     $scope.$emit('change-title', {title: 'Games'});
     $scope.games = Game.allGames();
+    $scope.$on('games-refreshed', function(event, args) {
+        $scope.games = Game.allGames();
+    });
 });
 
 digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Game, scoreChart) {
