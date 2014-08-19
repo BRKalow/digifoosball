@@ -35,7 +35,7 @@ digiFoosballServices.factory('Game', function($resource, $rootScope) {
         },
         refreshGames: function() {
             games = resource.query();
-            $rootScope.$broadcast('games-refreshed', users);
+            $rootScope.$broadcast('games-refreshed', games);
         }
     };
 });
