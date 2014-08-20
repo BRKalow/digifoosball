@@ -135,7 +135,8 @@ module DigiFoosball
     put '/receive_from_dc' do
       if Game.first.finished == 0
         params.merge! JSON.parse(request.env["rack.input"].read)
-        resp = parse_dc_response params["Document"]["Msg"]["DataPoint"]
+        resp = parse_dc_response params["Document"]["Msg"]["DataPoint"], @@previous_value
+        @@previous_value = resp["value"]
         if resp[:should_increment_score]
           increment_score resp[:id], resp[:team] 
         end

@@ -55,16 +55,12 @@ module Sinatra
         request_to_device_cloud 'put', 'ws/Monitor', post_data.to_xml
       end
 
-      def parse_dc_response(data)
+      def parse_dc_response(data, previous_value)
         input = data["streamId"].split('/')[3]
         value = data["data"]
-        should_increment_score = (value == 1 && @@previous_value != 1)
+        should_increment_score = (value == 1 && previous_value != 1)
         latest_game = Game.first
         id = 0
-
-        # this ensures that if a sensor gets stuck it won't constantly
-        # add to score
-        @@previous_value = value
 
         if latest_game
           if (latest_game.finished == 1)
@@ -76,7 +72,8 @@ module Sinatra
         parsed = Hash.new; parsed = {
           :team => (input == settings.device_cloud['home_input'] ? 'home' : 'away'),
           :should_increment_score => should_increment_score,
-          :id => id 
+          :id => id,
+          :value => value
         }
       end
     end
