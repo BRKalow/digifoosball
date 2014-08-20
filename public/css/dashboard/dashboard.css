@@ -568,3 +568,12 @@ html,body,.page-wrapper {
 .btn.disabled {
   color: white;
 }
+.new-game-home {
+  border-right: 1px solid #eee;
+}
+.new-game-away {
+  text-align: right;
+}
+.new-game-away .form-control {
+  text-align: right;
+}

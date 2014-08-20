@@ -2,16 +2,14 @@
     <h3 class="modal-title">Start a new game</h3>
 </div>
 <div class="modal-body">
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <label for="home-team" class="col-sm-3 control-label">Home Player:</label>
-            <div class="col-sm-9">
+    <form class="form-inline" role="form">
+        <div class="row">
+            <div class="form-group col-sm-6 new-game-home">
+                <label for="home-team" class="control-label">Home Player:</label>
                 <input type="text" ng-model="homeTeam" class="form-control" id="home-team" placeholder="Home player" typeahead="user as user.name for user in users | filter:{name:$viewValue}" typeahead-editable="false">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="away-team" class="col-sm-3 control-label">Away Player:</label>
-            <div class="col-sm-9">
+            <div class="form-group col-sm-6 new-game-away">
+                <label for="away-team" class="control-label">Away Player:</label>
                 <input type="text" ng-model="awayTeam" class="form-control" id="away-team" placeholder="Away player" typeahead="user as user.name for user in users | filter:{name:$viewValue}" typeahead-editable="false" typeahead-on-select="">
             </div>
         </div>
