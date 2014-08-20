@@ -2,6 +2,11 @@
     <div class="col-lg-8 col-md-12 col-xs-12">
         <div class="widget scoreboard">
             <div class="widget-body large text-center">
+                <div class="text-center" ng-if="game.finished==1">
+                    <button class="btn btn-sm btn-info" ng-click="rematch()">
+                        Rematch
+                    </button>
+                </div>
                 <span class="pull-left text-left name">
                     {{ game.player_home.name }}<br/>
                     <gravatar for="game.player_home.gravatar"></gravatar>

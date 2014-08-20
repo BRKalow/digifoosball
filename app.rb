@@ -145,7 +145,7 @@ module DigiFoosball
     end
 
     # For testing:
-    get '/artifical_dc_push/:id/:team' do
+    get '/artificial_dc_push/:id/:team' do
       increment_score params[:id], params[:team]
 
       status 200

@@ -195,12 +195,21 @@ digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {
     });
 });
 
-digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, Game, scoreChart) {
+digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $location,Game, scoreChart) {
     $scope.$emit('change-title', {title: 'Game'});
     $scope.game = Game.resource.get({gameId:$routeParams.gameId});
     $scope.chart = scoreChart.getChart();
     $scope.rebuildChart = function() {
         scoreChart.rebuildChartConfig($scope.game.score_history, $scope.game.player_home.name, $scope.game.player_away.name);
+    };
+    $scope.rematch = function() {
+        var newGame = new Game.resource({player_home_id:$scope.game.player_home.id,
+                                         player_away_id:$scope.game.player_away.id});
+        newGame.$save(function(g, headers) {
+            Game.refreshGames();
+            $scope.gameGoingOn[0] = g;
+            $location.path('games/'+g.id);
+        });
     };
 
     /**
