@@ -130,6 +130,7 @@
     float: left;
     text-decoration: none;
     width: 250px;
+    transition: all .3s ease 0s;
   }
   ul.sidebar .sidebar-main {
     height: 65px;
@@ -178,8 +179,7 @@
   }
   ul.sidebar .sidebar-list a:hover {
     color: #fff;
-    border-left: 3px solid #e99d1a;
-    text-indent: 22px;
+    background: rgba(255,255,255,0.10);
   }
   #page-wrapper:not(.active) ul.sidebar .sidebar-list a:hover span {
     border-left: 3px solid #e99d1a;
