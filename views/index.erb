@@ -35,10 +35,7 @@
             <img src="img/logo.png" alt="Digi" style="max-height:30px;"/>
             Digi Foosball
           </a>
-            <span class="menu-icon glyphicon glyphicon-transfer" ng-click="toggleSidebar()"></span>
-          </a>
         </li>
-        <li class="sidebar-title"><span>NAVIGATION</span></li>
         <li class="sidebar-list">
           <a href="/">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
         </li>
@@ -67,9 +64,14 @@
 
         <div class="row header">
           <div class="col-xs-12">
+            <div class="toggle-button" ng-click="toggleSidebar()">
+              <span>
+                <i class="fa fa-2x fa-align-justify green-icon"></i>
+              </span>
+            </div>
             <div class="meta pull-left">
               <div class="page">
-                Digi Foosball
+                <a href="#">Digi Foosball</a>
               </div>
               <div class="breadcrumb-links">
                 {{ title }}
