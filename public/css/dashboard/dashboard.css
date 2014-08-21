@@ -441,7 +441,7 @@
   height: 65px;
 }
 .scoreboard .widget-body {
-  height: 400px!important;
+  height: auto!important; 
 }
 .score {
   font-family: "JD LED3";

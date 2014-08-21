@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-8 col-md-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-xs-12">
         <div class="widget scoreboard">
             <div class="widget-body large text-center">
                 <div class="text-center" ng-if="game.finished==1">
@@ -8,11 +8,11 @@
                     </button>
                 </div>
                 <span class="pull-left text-left name">
-                    {{ game.player_home.name }}<br/>
+                    {{ game.player_home.name }} <br/>
                     <gravatar for="game.player_home.gravatar"></gravatar>
                 </span>
                 <span class="pull-right text-right name">
-                    {{ game.player_away.name }}<br/>
+                    {{ game.player_away.name }} <br/>
                     <gravatar for="game.player_away.gravatar"></gravatar>
                 </span>
                 <span class="score">
@@ -29,16 +29,29 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-lg-8 col-md-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-title"><i class="fa fa-bar-chart-o"></i> Score History</div>
+            <div class="widget-body score-history">
+                <div ac-chart="chart.chartType" ac-data="chart.data" ac-config="chart.config" id='chart' class='chart'></div>
+            </div>
+        </div>
+    </div>
     <div class="col-lg-4 col-md-12 col-xs-12">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="widget">
                     <div class="widget-title"><i class="fa fa-child"></i>{{ game.player_home.name }}</div>
                     <div class="widget-body">
+                        <gravatar for="game.player_home.gravatar" g-class="'pull-right'"></gravatar>
                         Wins: {{ game.player_home.wins }}<br/>
                         Losses: {{ game.player_home.losses }}<br/>
                         Rating: {{ game.player_home.rating }}
-                        <span ng-class="{'winner': game.score_home == 5,'loser': game.score_away == 5}" ng-if="game.finished">({{ game.home_rating_change }})</span>
+                        <span ng-class="{'winner': game.score_home == 5,'loser': game.score_away == 5}" ng-if="game.finished">
+                            ({{ game.score_home == 5 ? '+' : '-' }}{{ game.home_rating_change }})
+                        </span>
                     </div>
                 </div>
             </div>
@@ -48,20 +61,15 @@
                 <div class="widget">
                     <div class="widget-title"><i class="fa fa-child"></i>{{ game.player_away.name }}</div>
                     <div class="widget-body">
+                        <gravatar for="game.player_away.gravatar" g-class="'pull-right'"></gravatar>
                         Wins: {{ game.player_away.wins }}<br/>
                         Losses: {{ game.player_away.losses }}<br/>
                         Rating: {{ game.player_away.rating }}
-                        <span ng-class="{'winner': game.score_away == 5,'loser': game.score_home == 5}" ng-if="game.finished">({{ game.away_rating_change }})</span>
+                        <span ng-class="{'winner': game.score_away == 5,'loser': game.score_home == 5}" ng-if="game.finished">
+                            ({{ game.score_away == 5 ? '+' : '-' }}{{ game.away_rating_change }})
+                        </span>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-8 col-md-12 col-xs-12">
-        <div class="widget">
-            <div class="widget-title"><i class="fa fa-bar-chart-o"></i> Score History</div>
-            <div class="widget-body score-history">
-                <div ac-chart="chart.chartType" ac-data="chart.data" ac-config="chart.config" id='chart' class='chart'></div>
             </div>
         </div>
     </div>
