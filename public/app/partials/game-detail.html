@@ -19,9 +19,12 @@
                     <span ng-class="{'winner': game.score_home == 5}">{{ game.score_home }}</span> :
                     <span ng-class="{'winner': game.score_away == 5}">{{ game.score_away }}</span>
                 </span>
-                <div class="text-center">
-                    <span ng-if="game.finished==1">FINAL<br/></span>
-                    {{ game.created_at | date:'MMM d, yyyy (h:mma)' }}
+                <div ng-if="game.finished==1" class="text-center">
+                    <span>FINAL<br/></span>
+                    {{ game.updated_at | date:'MMM d, yyyy (h:mma)' }}
+                </div>
+                <div ng-if="game.finished==0" class="text-center">
+                    <game-clock start="{{ game.created_at }}"></game-clock>
                 </div>
             </div>
         </div>

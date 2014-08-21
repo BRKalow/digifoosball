@@ -577,3 +577,6 @@ html,body,.page-wrapper {
 .new-game-away .form-control {
   text-align: right;
 }
+.game-clock {
+  font-size: 18px;
+}
