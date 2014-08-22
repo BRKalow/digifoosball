@@ -225,13 +225,13 @@
     overflow-y: auto;
     transition: all .3s ease 0s;
   }
-  #page-wrapper.active {
+  #page-wrapper .active {
   }
   #page-wrapper:not(.active) #sidebar-wrapper {
     display:none;
   }
   #page-wrapper:not(.active) #content-wrapper {
-    width:100%;
+    width: 100%;
   }
 
 /* Header */
@@ -441,7 +441,7 @@
   height: 65px;
 }
 .scoreboard .widget-body {
-  height: auto!important; 
+  height: auto!important;
 }
 .score {
   font-family: "JD LED3";
