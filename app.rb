@@ -155,6 +155,9 @@ module DigiFoosball
 
     get '/change_rating' do
       User.update_all "rating = rating - 1400"
+
+      status 200
+      body ''
     end
 
     error Sinatra::NotFound do
