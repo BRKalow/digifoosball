@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     self.goals_given ||= 0
     self.time_played ||= 0
     self.gravatar ||= 0
-    self.rating ||= 1400
+    self.rating ||= 0
   end
 
   def create_gravatar_hash

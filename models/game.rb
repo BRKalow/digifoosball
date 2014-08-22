@@ -29,6 +29,12 @@ class Game < ActiveRecord::Base
     self.score_home < 5 ? (self.player_home) : (self.player_away)
   end
 
+  def score_per_team
+    self.score_history.split(',').each_with_object(Hash.new(0)) do |word,counts|
+      counts[word] += 1
+    end
+  end
+
   def increment_score(team)
     return if self.game_finished?
 
@@ -54,31 +60,21 @@ class Game < ActiveRecord::Base
   end
 
   def determine_rating_change
-    # Using the Elo Algorithm
-    winner_rating = self.winner.rating
-    loser_rating = self.loser.rating
+    scores = self.score_per_team
+    goal_weight = (scores['home'] - scores['away']) / 10.0
+    rating_diff = self.winner.rating - self.loser.rating
 
-    rating_diff = winner_rating - loser_rating
-    exp = -1.0 * rating_diff / 400.0
-    odds = 1.0 / (1.0 + 10 ** exp)
+    rating = Integer 10*(1 + (goal_weight - (1 / (1.0 + 10**((rating_diff) / 400.0)))))    
 
-    if winner_rating < 2100
-      k = 40
-    elsif winner_rating >= 2100 && winner_rating < 2400
-      k = 28
-    else
-      k = 16
-    end
-
-    self.winner.rating = winner_rating + k * (1.0 - odds)
-    self.loser.rating = loser_rating - (self.winner.rating - winner_rating)
+    self.winner.rating += rating * 2
+    self.loser.rating  = (self.loser.rating - rating < 0) ? 0 : self.loser.rating - rating
 
     if self.winner == self.player_home
-      self.home_rating_change = self.winner.rating - winner_rating
-      self.away_rating_change = loser_rating - self.loser.rating
+      self.home_rating_change = rating * 2 
+      self.away_rating_change = rating 
     else
-      self.home_rating_change = loser_rating - self.loser.rating
-      self.away_rating_change = self.winner.rating - winner_rating
+      self.home_rating_change = rating 
+      self.away_rating_change = rating * 2 
     end
   end
 end

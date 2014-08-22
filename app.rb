@@ -153,6 +153,10 @@ module DigiFoosball
       body ''
     end
 
+    get '/change_rating' do
+      User.update_all "rating = rating - 1400"
+    end
+
     error Sinatra::NotFound do
       redirect to '/'
     end

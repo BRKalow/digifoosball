@@ -152,7 +152,7 @@ digiFoosballControllers.controller('IndexCtrl', function($scope, Statistics, Use
         });
       });
     };
-    var statsTimer = setInterval(updateStats, 10000);
+    var statsTimer = setInterval(updateStats, 60000);
 
     $scope.users = User.allUsers();
     $scope.$on('users-refreshed', function(event, args) {
