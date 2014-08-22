@@ -48,7 +48,7 @@
                         <gravatar for="game.player_home.gravatar" g-class="'pull-right'"></gravatar>
                         Wins: {{ game.player_home.wins }}<br/>
                         Losses: {{ game.player_home.losses }}<br/>
-                        Rating: {{ game.player_home.rating }}
+                        Leauge Points: {{ game.player_home.rating }}
                         <span ng-class="{'winner': game.score_home == 5,'loser': game.score_away == 5}" ng-if="game.finished">
                             ({{ game.score_home == 5 ? '+' : '-' }}{{ game.home_rating_change }})
                         </span>
@@ -64,7 +64,7 @@
                         <gravatar for="game.player_away.gravatar" g-class="'pull-right'"></gravatar>
                         Wins: {{ game.player_away.wins }}<br/>
                         Losses: {{ game.player_away.losses }}<br/>
-                        Rating: {{ game.player_away.rating }}
+                        League Points: {{ game.player_away.rating }}
                         <span ng-class="{'winner': game.score_away == 5,'loser': game.score_home == 5}" ng-if="game.finished">
                             ({{ game.score_away == 5 ? '+' : '-' }}{{ game.away_rating_change }})
                         </span>
