@@ -33,10 +33,10 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     Stream.onmessage(function(data) {
         if(data.id) {
             $scope.$broadcast('game-push-received', { receivedGame: data });
-            Game.refreshGames();
-            User.refreshUsers();
             if(data.finished == 0) {
                 $scope.gameGoingOn[0] = data;
+                Game.refreshGames();
+                User.refreshUsers();
             } else {
                 $scope.gameGoingOn[0] = null;
             }
