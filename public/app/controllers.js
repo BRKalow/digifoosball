@@ -211,7 +211,8 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $l
     };
     $scope.rematch = function() {
         var newGame = new Game.resource({player_home_id:$scope.game.player_home.id,
-                                         player_away_id:$scope.game.player_away.id});
+                                         player_away_id:$scope.game.player_away.id,
+                                         league_game:$scope.game.league_game});
         newGame.$save(function(g, headers) {
             Game.refreshGames();
             $scope.gameGoingOn[0] = g;
