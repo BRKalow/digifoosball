@@ -15,6 +15,7 @@ class Game < ActiveRecord::Base
     self.finished ||= 0
     self.home_rating_change ||= 0
     self.away_rating_change ||= 0
+    self.league_game ||= 0
   end
 
   def game_finished?
