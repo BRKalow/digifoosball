@@ -72,6 +72,7 @@ class Game < ActiveRecord::Base
     rating_diff = self.loser.rating - self.winner.rating 
 
     rating = Integer 10*(1 + (goal_weight - (1 / (1.0 + 10**((rating_diff) / 400.0)))))    
+    rating = 0 if rating < 0
 
     self.winner.rating += rating * 2
     self.loser.rating  = (self.loser.rating - rating < 0) ? 0 : self.loser.rating - rating
