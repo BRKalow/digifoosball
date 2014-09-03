@@ -60,6 +60,7 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 
         $scope.hasModalOpen = true;
         $scope.leagueGame = true;
+        $scope.manualGame = true;
 
         var modalInstance = $modal.open({
             templateUrl: 'app/partials/new-game-modal.tpl.html',
@@ -70,6 +71,8 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         modalInstance.result.then(function(values) {
             if(values[2]) values[2] = 1;
             if(!values[2]) values[2] = 0;
+            if(values[3] === false) values[3] = 1;
+            if(values[3] === true) values[3] = 0;
             $scope.hasModalOpen = false;
             if(values[0].id == values[1].id) {
                 Alert.setAlert('You can\'t create a game with one person!');
@@ -78,7 +81,8 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
             var newGame = new Game.resource({
                 player_home_id:values[0].id,
                 player_away_id:values[1].id,
-                league_game:values[2]
+                league_game:values[2],
+                manual:values[3]
             });
             newGame.$save(function(g, headers) {
                 Game.refreshGames();
@@ -202,7 +206,7 @@ digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {
     });
 });
 
-digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $location,Game, scoreChart) {
+digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $location,Game, scoreChart, $http) {
     $scope.$emit('change-title', {title: 'Game'});
     $scope.game = Game.resource.get({gameId:$routeParams.gameId});
     $scope.chart = scoreChart.getChart();
@@ -212,13 +216,18 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $l
     $scope.rematch = function() {
         var newGame = new Game.resource({player_home_id:$scope.game.player_home.id,
                                          player_away_id:$scope.game.player_away.id,
-                                         league_game:$scope.game.league_game});
+                                         league_game:$scope.game.league_game,
+                                         manual:$scope.game.manual});
         newGame.$save(function(g, headers) {
             Game.refreshGames();
             $scope.gameGoingOn[0] = g;
             $location.path('games/'+g.id);
         });
     };
+    $scope.incrementScore = function(team) {
+        console.log(team);
+        $http.get('manual_score/'+$scope.game.id+'/'+team);
+    }
 
     /**
     * Stream

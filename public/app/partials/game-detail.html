@@ -8,11 +8,11 @@
                     </button>
                 </div>
                 <span class="pull-left text-left name">
-                    {{ game.player_home.name }} <br/>
+                    {{ game.player_home.name }} <button class="btn btn-sm btn-info" ng-if="game.finished == 0 && game.manual == 1" ng-click="incrementScore('home')">Score</button><br/>
                     <gravatar for="game.player_home.gravatar"></gravatar>
                 </span>
                 <span class="pull-right text-right name">
-                    {{ game.player_away.name }} <br/>
+                    <button class="btn btn-sm btn-info" ng-if="game.finished == 0 && game.manual == 1" ng-click="incrementScore('away')">Score</button> {{ game.player_away.name }}<br/>
                     <gravatar for="game.player_away.gravatar"></gravatar>
                 </span>
                 <span class="score">

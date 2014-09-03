@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140903154435) do
+ActiveRecord::Schema.define(version: 20140903181213) do
 
   create_table "games", force: true do |t|
     t.integer  "player_home_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140903154435) do
     t.integer  "home_rating_change"
     t.integer  "away_rating_change"
     t.integer  "league_game"
+    t.integer  "manual"
   end
 
 # Could not dump table "users" because of following NoMethodError

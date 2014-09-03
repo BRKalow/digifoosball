@@ -140,7 +140,7 @@ module DigiFoosball
     end
 
     put '/receive_from_dc' do
-      if Game.first.finished == 0
+      if Game.first.finished == 0 && Game.first.manual == 0
         params.merge! JSON.parse(request.env["rack.input"].read)
         resp = parse_dc_response params["Document"]["Msg"]["DataPoint"], @@previous_value
         @@previous_value = resp["value"]
@@ -153,7 +153,7 @@ module DigiFoosball
     end
 
     # For testing:
-    get '/artificial_dc_push/:id/:team' do
+    get '/manual_score/:id/:team' do
       increment_score params[:id], params[:team]
 
       status 200

@@ -10,6 +10,12 @@
                     League game? (stats will be tracked and the outcome will impact your league rating) 
                 </label>
             </div>
+            <div class="new-game-checkbox checkbox col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="manualGame" checked>
+                    Score automatically? (scores will be automatically updated, if possible)
+                </label>
+            </div>
         </div>
         <div class="row">
             <div class="form-group col-sm-6 new-game-home">
@@ -24,6 +30,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-class="{'disabled':!homeTeam || !awayTeam}" ng-click="$close([homeTeam,awayTeam,leagueGame])">Start game</button>
+    <button class="btn btn-primary" ng-class="{'disabled':!homeTeam || !awayTeam}" ng-click="$close([homeTeam,awayTeam,leagueGame,manualGame])">Start game</button>
     <button class="btn btn-link" ng-click="$dismiss()">Cancel</button>
 </div>
