@@ -4,6 +4,14 @@
 <div class="modal-body">
     <form class="form-inline" role="form">
         <div class="row">
+            <div class="new-game-checkbox checkbox col-sm-12">
+                <label>
+                    <input type="checkbox" ng-model="leagueGame" checked>
+                    League game? (stats will be tracked and the outcome will impact your league rating) 
+                </label>
+            </div>
+        </div>
+        <div class="row">
             <div class="form-group col-sm-6 new-game-home">
                 <label for="home-team" class="control-label">Home Player:</label>
                 <input type="text" ng-model="homeTeam" class="form-control" id="home-team" placeholder="Home player" typeahead="user as user.name for user in users | filter:{name:$viewValue}" typeahead-editable="false">
@@ -11,14 +19,6 @@
             <div class="form-group col-sm-6 new-game-away">
                 <label for="away-team" class="control-label">Away Player:</label>
                 <input type="text" ng-model="awayTeam" class="form-control" id="away-team" placeholder="Away player" typeahead="user as user.name for user in users | filter:{name:$viewValue}" typeahead-editable="false" typeahead-on-select="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="new-game-checkbox checkbox col-sm-12">
-                <label>
-                    <input type="checkbox" ng-model="leagueGame" checked>
-                    League game? (stats will be tracked and the outcome will impact your league rating) 
-                </label>
             </div>
         </div>
     </form>
