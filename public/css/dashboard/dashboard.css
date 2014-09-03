@@ -597,3 +597,7 @@ html,body,.page-wrapper {
   margin-right: 15px;
   cursor: pointer;
 }
+.new-game-checkbox {
+  padding-left:15px !important;
+  margin-top: 20px !important;
+}

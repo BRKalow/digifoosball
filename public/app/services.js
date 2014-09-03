@@ -33,6 +33,9 @@ digiFoosballServices.factory('Game', function($resource, $rootScope) {
             }
             return games;
         },
+        latestGames: function() {
+            return resource.query({limit:'5'});
+        },
         refreshGames: function() {
             games = resource.query();
             $rootScope.$broadcast('games-refreshed', games);

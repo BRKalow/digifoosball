@@ -59,7 +59,7 @@ which interfaces with an SQLite3 database and provides an API through which the
 Hardware
 --------
 
-An Arduino with infrared LEDs and sensors are used to track goals, and an XBee
+An Arduino with infrared LEDs and sensors is used to track goals, and an XBee
  device on an XBee Dev Board is used to send signals to an XBee Gateway,
  and through the Gateway to Device Cloud.
 

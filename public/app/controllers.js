@@ -59,6 +59,7 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     $scope.newGameModal = function() {
 
         $scope.hasModalOpen = true;
+        $scope.leagueGame = true;
 
         var modalInstance = $modal.open({
             templateUrl: 'app/partials/new-game-modal.tpl.html',
@@ -66,13 +67,19 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
             scope: $scope
         });
 
-        modalInstance.result.then(function(teams) {
+        modalInstance.result.then(function(values) {
+            if(values[2]) values[2] = 1;
+            if(!values[2]) values[2] = 0;
             $scope.hasModalOpen = false;
-            if(teams[0].id == teams[1].id) {
+            if(values[0].id == values[1].id) {
                 Alert.setAlert('You can\'t create a game with one person!');
                 return;
             }
-            var newGame = new Game.resource({player_home_id:teams[0].id, player_away_id:teams[1].id});
+            var newGame = new Game.resource({
+                player_home_id:values[0].id,
+                player_away_id:values[1].id,
+                league_game:values[2]
+            });
             newGame.$save(function(g, headers) {
                 Game.refreshGames();
                 $scope.gameGoingOn[0] = g;
@@ -159,9 +166,9 @@ digiFoosballControllers.controller('IndexCtrl', function($scope, Statistics, Use
         $scope.users = User.allUsers();
     });
 
-    $scope.games = Game.allGames();
+    $scope.games = Game.latestGames();
     $scope.$on('games-refreshed', function(event, args) {
-        $scope.games = Game.allGames();
+        $scope.games = Game.latestGames();
     });
 });
 

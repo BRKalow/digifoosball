@@ -39,8 +39,11 @@ class Game < ActiveRecord::Base
     return if self.game_finished?
 
     team == 'home' ? self.score_home += 1 : self.score_away += 1
-    self.player_home.handle_score 'home', team
-    self.player_away.handle_score 'away', team
+
+    if self.league_game.nonzero?
+      self.player_home.handle_score 'home', team
+      self.player_away.handle_score 'away', team
+    end
 
     self.score_history == '' ? (self.score_history += team) : (self.score_history += ',' + team)
     self.save!
@@ -53,10 +56,13 @@ class Game < ActiveRecord::Base
   end
 
   def handle_game_over
-    self.determine_rating_change
-    self.finished = 1; self.save!
-    self.winner.handle_game_over 'win', self.length
-    self.loser.handle_game_over 'loss', self.length
+    self.finished = 1
+    if self.league_game.nonzero?
+      self.determine_rating_change
+      self.winner.handle_game_over 'win', self.length
+      self.loser.handle_game_over 'loss', self.length
+    end
+    self.save!
   end
 
   def determine_rating_change
