@@ -220,7 +220,7 @@
     height: 100%;
     max-height: 100%;
     float: right;
-    background: white;
+    background: whitesmoke;
     width: calc(100% - 250px);
     overflow-y: auto;
     transition: all .3s ease 0s;
@@ -593,4 +593,7 @@ html,body,.page-wrapper {
 .new-game-checkbox {
   padding-left:15px !important;
   margin-bottom: 20px !important;
+}
+.nested-col {
+  padding-right: 0px;
 }
