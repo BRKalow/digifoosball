@@ -69,7 +69,7 @@ class Game < ActiveRecord::Base
 
   def determine_rating_change
     scores = self.score_per_team
-    goal_weight = (scores['home'] - scores['away']) / 10.0
+    goal_weight = (scores['home'] - scores['away']).abs / 10.0
     rating_diff = self.loser.rating - self.winner.rating 
 
     rating = Integer 10*(1 + (goal_weight - (1 / (1.0 + 10**((rating_diff) / 400.0)))))    
