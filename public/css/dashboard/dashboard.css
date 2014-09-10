@@ -34,6 +34,9 @@
     letter-spacing: 0.5px;
     color: #56565D;
   }
+  a:link, a:visited, a:active, a:hover {
+    color: #23ae89;
+  }
   .row {
     margin-left: 0;
     margin-right: 0;
@@ -562,11 +565,22 @@ html,body,.page-wrapper {
   margin-top: 10px;
 }
 .btn {
-  color: #46b8da;
+  color: #23ae89;
   background-color: white;
+  border: 2px solid transparent;
 }
 .btn.disabled {
+  background-color: #23ae89;
+  border-color: #23ae89;
   color: white;
+}
+.btn-info {
+  background-color: white;
+  border-color: #23ae89;
+}
+.btn-info:hover, .btn-info:focus {
+  border-color: #23ae89;
+  background-color: #23ae89;
 }
 .new-game-home {
   border-right: 1px solid #eee;
