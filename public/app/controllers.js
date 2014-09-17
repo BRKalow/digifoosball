@@ -183,10 +183,13 @@ digiFoosballControllers.controller('PlayerListCtrl', function($scope) {
     });
 });
 
-digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User) {
+digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User, rankingChart) {
     $scope.$emit('change-title', {title: 'Player'});
     $scope.user = User.resource.get({userId:$routeParams.userId});
-
+    $scope.chart = rankingChart.getChart();
+    $scope.rebuildChart = function() {
+        rankingChart.rebuildChartConfig($scope.user);
+    };
     $scope.user.$promise.then(function() {
         $scope.totalGoals = $scope.user.goals_given + $scope.user.goals_scored;
         $scope.percent_scored = (100 * $scope.user.goals_scored / $scope.totalGoals).toFixed(2);
@@ -195,6 +198,9 @@ digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, 
         $scope.totalGames = $scope.user.games_played;
         $scope.percent_wins = (100 * $scope.user.wins / $scope.user.games_played).toFixed(2);
         $scope.percent_losses = (100 * $scope.user.losses / $scope.user.games_played).toFixed(2);
+
+        $scope.rebuildChart();
+        $scope.chart = rankingChart.getChart();
     });
 });
 

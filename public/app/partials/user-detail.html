@@ -58,7 +58,12 @@
 </div>
 <div class="row">
   <div class="col-lg-8">
-    <recent-games-index for="user.games" />
+    <div class="widget">
+        <div class="widget-title"><i class="fa fa-bar-chart-o"></i> Ranking History</div>
+        <div class="widget-body">
+            <div ac-chart="chart.chartType" ac-data="chart.data" ac-config="chart.config" id='chart' class='chart'></div>
+        </div>
+    </div>
   </div>
   <div class="col-lg-4">
     <div class="widget">
@@ -71,5 +76,8 @@
         </user-stat-bar>
       </div>
     </div>
+  </div>
+  <div class="col-lg-8">
+    <recent-games-index for="user.games" />
   </div>
 </div>
