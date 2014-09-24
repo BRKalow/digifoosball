@@ -1,3 +1,5 @@
+[![Build Status](https://magnum.travis-ci.com/BRKalow/digifoosball.svg?token=5ZfUh24c3cN1xYonZ1Jm&branch=master)](https://magnum.travis-ci.com/BRKalow/digifoosball)
+
 Digi Foosball
 =============
 
