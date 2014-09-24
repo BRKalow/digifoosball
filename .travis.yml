@@ -5,6 +5,7 @@ deploy:
   provider: heroku
   api_key:
     secure: Vs5KXbmrwh7chBaT4URLrppuGnturlUKDL4fNvSyLI31vzrHarIYPh/D+LFdOZ2IRim9AiYIBbC/HxWgMH3SgteK5gJfnz8VrH1Tsb58AAOSquv97Ed4goIBROy1BUX+Kf32rqkqYmrdttpHyjspStpagjPFwSau4uQKLUKucPc=
+  strategy: git
   app: digi-foosball
   on:
     repo: BRKalow/digifoosball
