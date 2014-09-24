@@ -183,25 +183,22 @@ digiFoosballControllers.controller('PlayerListCtrl', function($scope) {
     });
 });
 
-digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User, rankingChart) {
+digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, User, rankingChart, player) {
     $scope.$emit('change-title', {title: 'Player'});
-    $scope.user = User.resource.get({userId:$routeParams.userId});
+    $scope.user = player;
     $scope.chart = rankingChart.getChart();
     $scope.rebuildChart = function() {
         rankingChart.rebuildChartConfig($scope.user);
     };
-    $scope.user.$promise.then(function() {
-        $scope.totalGoals = $scope.user.goals_given + $scope.user.goals_scored;
-        $scope.percent_scored = (100 * $scope.user.goals_scored / $scope.totalGoals).toFixed(2);
-        $scope.percent_given = (100 * $scope.user.goals_given / $scope.totalGoals).toFixed(2);
 
-        $scope.totalGames = $scope.user.games_played;
-        $scope.percent_wins = (100 * $scope.user.wins / $scope.user.games_played).toFixed(2);
-        $scope.percent_losses = (100 * $scope.user.losses / $scope.user.games_played).toFixed(2);
-
-        $scope.rebuildChart();
-        $scope.chart = rankingChart.getChart();
-    });
+    $scope.totalGoals = User.totalGoals($scope.user); 
+    $scope.percent_scored = User.percentGoalsScored($scope.user);
+    $scope.percent_given = User.percentGoalsGiven($scope.user);
+    $scope.totalGames = $scope.user.games_played;
+    $scope.percent_wins = User.percentWins($scope.user);
+    $scope.percent_losses = User.percentLosses($scope.user);
+    $scope.rebuildChart();
+    $scope.chart = rankingChart.getChart();
 });
 
 digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {

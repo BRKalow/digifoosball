@@ -25,7 +25,15 @@ app.config(['$routeProvider', '$locationProvider',
       }).
       when('/players/:userId', {
         templateUrl: 'app/partials/user-detail.html',
-        controller:  'PlayerCtrl'
+        controller:  'PlayerCtrl',
+        resolve: {
+          player: function(User, $route) {
+            var promise = User.resource.get({userId:$route.current.params.userId}).$promise.then(function(data) {
+              return data;
+            });
+            return promise;
+          }
+        }
       }).
       when('/games', {
         templateUrl: 'app/partials/game-list.html',
