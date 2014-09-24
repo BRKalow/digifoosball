@@ -19,10 +19,8 @@ group :development do
   gem 'tux'
 end
 
-group :test, :deployment do
+group :test, :development  do
   gem 'rspec'
+  gem 'sqlite3'
 end
 
-group :development, :deployment do
-  gem 'sqlite3'
-end 
