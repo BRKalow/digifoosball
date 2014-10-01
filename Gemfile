@@ -19,6 +19,10 @@ group :development do
   gem 'tux'
 end
 
+group :test do
+  gem 'simplecov', :require => false
+end
+
 group :test, :development  do
   gem 'rspec'
   gem 'sqlite3'
