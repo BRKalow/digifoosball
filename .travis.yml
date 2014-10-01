@@ -9,3 +9,4 @@ deploy:
   app: digi-foosball
   on:
     repo: BRKalow/digifoosball
+before_script: bundle exec rake:db:test:prepare
