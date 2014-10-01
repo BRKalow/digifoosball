@@ -45,9 +45,9 @@ describe "DigiFoosball App" do
     end
 
     context "when params[:limit] is defined" do
-      it "returns X latest games" do
+      it "returns at most X latest games" do
         get '/api/games', :limit => 5
-        expect(JSON.parse(last_response.body).length).to eq 5
+        expect(JSON.parse(last_response.body).length).to be <= 5
       end
     end
   end

@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration
         t.string    :department
         t.integer   :wins
         t.integer   :losses
+        
         t.timestamps
     end
   end

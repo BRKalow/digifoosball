@@ -28,7 +28,20 @@ ActiveRecord::Schema.define(version: 20140903181213) do
     t.integer  "manual"
   end
 
-# Could not dump table "users" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "department"
+    t.integer  "wins"
+    t.integer  "losses"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "games_played"
+    t.integer  "goals_scored"
+    t.integer  "goals_given"
+    t.integer  "time_played"
+    t.string   "gravatar"
+    t.integer  "rating"
+  end
 
 end
