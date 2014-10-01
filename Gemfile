@@ -21,6 +21,7 @@ end
 
 group :test do
   gem 'simplecov', :require => false
+  gem 'factory_girl', '~> 4.0'
 end
 
 group :test, :development  do

@@ -9,14 +9,10 @@ Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
 # Require all helpers
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
-# Turn off ActiveRecord query logging
-ActiveRecord::Base.logger.level = 1
-
 module DigiFoosball
   class Base < Sinatra::Base
     set :views, File.dirname(__FILE__) + '/views'
-    set :environment, :development
-    set :raise_errors, true
+    set :raise_errors, false
 
     register Sinatra::DeviceCloud
 

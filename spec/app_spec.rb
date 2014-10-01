@@ -52,6 +52,15 @@ describe "DigiFoosball App" do
     end
   end
 
+  describe "post '/api/user'" do
+    it "creates a user and returns the user object" do
+      post '/api/user', attributes_for(:user).to_json, {"CONTENT_TYPE" => 'application/json'}
+      expect(last_response.status).to eq 201
+      new_user = JSON.parse(last_response.body)
+      expect(new_user["id"]).to be > 0
+    end
+  end
+
   describe "error Sinatra::NotFound" do
     it "redirects to '/'" do
       get '/fakeroute'
