@@ -3,7 +3,6 @@ SimpleCov.start
 
 require 'rack/test'
 require 'factory_girl'
-require 'rake'
 
 require File.expand_path '../../app.rb', __FILE__
 Dir[File.dirname(__FILE__) + '/factories/*.rb'].each {|file| require file }

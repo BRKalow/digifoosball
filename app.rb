@@ -9,6 +9,8 @@ Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
 # Require all helpers
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
+ActiveRecord::Base.logger.level = 1
+
 module DigiFoosball
   class Base < Sinatra::Base
     set :views, File.dirname(__FILE__) + '/views'
