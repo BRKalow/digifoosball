@@ -209,7 +209,7 @@ digiFoosballServices.factory('rankingChart', function() {
             dataPoints.unshift({x: "0", y: [0]});
             return dataPoints;
         }
-        
+
         for(var i = 1; i <= limit; i++) {
             var game = games[games.length - i];
             var ratingChange = (game.player_home_id == player.id) ? game.home_rating_change:game.away_rating_change;
@@ -257,15 +257,23 @@ digiFoosballServices.factory('rankingChart', function() {
     };
 });
 
-digiFoosballServices.factory('Modals', ['Game', 'Alert', '$rootScope', '$location', function(Game, Alert, $rootScope, $location) {
+digiFoosballServices.factory('Modals', ['User', 'Game', 'Alert', '$rootScope', '$location', '$modal', function(User, Game, Alert, $rootScope, $location, $modal) {
     return {
         newGame: {
+            create: function(scope) {
+                $rootScope.$broadcast('modal-opened');
+                return $modal.open({
+                    templateUrl: 'app/partials/new-game-modal.tpl.html',
+                    backdrop: 'static',
+                    scope: scope
+                });
+            },
             success: function(values) {
                 if(values[2]) values[2] = 1;
                 if(!values[2]) values[2] = 0;
                 if(values[3] === false) values[3] = 1;
                 if(values[3] === true) values[3] = 0;
-                $rootScope.$broadcast('modal-closed', {});
+                $rootScope.$broadcast('modal-closed');
                 if(values[0].id == values[1].id) {
                     Alert.setAlert('You can\'t create a game with one person!');
                     return;
@@ -281,6 +289,27 @@ digiFoosballServices.factory('Modals', ['Game', 'Alert', '$rootScope', '$locatio
                     Game.refreshActiveGames();
                     $rootScope.$broadcast('game-push-received', { receivedGame: g });
                     $location.path('games/'+g.id);
+                });
+            },
+            error: function(error) {
+                $rootScope.$broadcast('modal-closed');
+            }
+        },
+        newPlayer: {
+            create: function(scope) {
+                $rootScope.$broadcast('modal-opened');
+                return $modal.open({
+                    templateUrl: 'app/partials/new-player-modal.tpl.html',
+                    backdrop: 'static',
+                    scope: scope
+                });
+            },
+            success: function(params) {
+                $rootScope.$broadcast('modal-closed');
+                var newUser = new User.resource({name: params[0], email: params[1], department: params[2]});
+                newUser.$save(function(u, headers) {
+                    User.refreshUsers();
+                    $location.path('players/'+u.id);
                 });
             },
             error: function(error) {

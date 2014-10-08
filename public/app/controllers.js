@@ -19,7 +19,7 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
 
     $scope.gameGoingOn = Game.activeGames();
     $scope.$on('active-games-refreshed', function(event, args) {
-        $scope.gameGoingOn = Game.activeGames();  
+        $scope.gameGoingOn = Game.activeGames();
     });
 
     $scope.loading = false;
@@ -60,43 +60,27 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     $scope.$on('modal-closed', function() {
         $scope.hasModalOpen = false;
     });
-    $scope.newGameModal = function() {
-
+    $scope.$on('modal-opened', function() {
         $scope.hasModalOpen = true;
+    });
+    $scope.newGameModal = function() {
         $scope.leagueGame = true;
         $scope.manualGame = true;
+        var modalInstance = Modals.newGame.create($scope);
 
-        var modalInstance = $modal.open({
-            templateUrl: 'app/partials/new-game-modal.tpl.html',
-            backdrop: 'static',
-            scope: $scope
-        });
-
-        modalInstance.result.then(function(values) {
-            Modals.newGame.success(values)
-        }, function(error) { Modals.newGame.error(error) });
+        modalInstance.result.then(
+            function(values) { Modals.newGame.success(values); },
+            function(error) { Modals.newGame.error(error); }
+        );
     };
 
     $scope.newPlayerModal = function() {
+        var modalInstance = Modals.newPlayer.create($scope);
 
-        $scope.hasModalOpen = true;
-
-        var modalInstance = $modal.open({
-            templateUrl: 'app/partials/new-player-modal.tpl.html',
-            backdrop: 'static',
-            scope: $scope
-        });
-
-        modalInstance.result.then(function(params) {
-            $scope.hasModalOpen = false;
-            var newUser = new User.resource({name: params[0], email: params[1], department: params[2]});
-            newUser.$save(function(u, headers) {
-                User.refreshUsers();
-                $location.path('players/'+u.id);
-            });
-        }, function(error) {
-            $scope.hasModalOpen = false;
-        });
+        modalInstance.result.then(
+            function(values) { Modals.newPlayer.success(values); },
+            function(error) { Modals.newPlayer.error(error); }
+        );
     };
 
     /**
@@ -174,7 +158,7 @@ digiFoosballControllers.controller('PlayerCtrl', function($scope, $routeParams, 
         rankingChart.rebuildChartConfig($scope.user);
     };
 
-    $scope.totalGoals = User.totalGoals($scope.user); 
+    $scope.totalGoals = User.totalGoals($scope.user);
     $scope.percent_scored = User.percentGoalsScored($scope.user);
     $scope.percent_given = User.percentGoalsGiven($scope.user);
     $scope.totalGames = $scope.user.games_played;
@@ -213,10 +197,10 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $l
     };
     $scope.incrementScore = function(team) {
         $http.get('manual_score/'+$scope.game.id+'/'+team);
-    }
+    };
 
     $scope.$on('active-games-refreshed', function(event, args) {
-        $scope.gameGoingOn = Game.activeGames();  
+        $scope.gameGoingOn = Game.activeGames();
     });
 
     /**
