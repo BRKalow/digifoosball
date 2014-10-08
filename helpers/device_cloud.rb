@@ -18,16 +18,12 @@ module Sinatra
           settings.device_cloud['password'],
           resource
         )
-
-        case method
-        when 'get'
-          RestClient.get url, *args
-        when 'post'
-          RestClient.post url, *args
-        when 'put'
-          RestClient.put url, *args
-        when 'delete'
-          RestClient.delete url, *args
+        method_sym = method.to_sym
+        begin
+          RestClient.send(method_sym, url, *args)
+        rescue NoMethodError
+          puts "Invalid method passed to RestClient through"
+               "reqest_to_device_cloud"
         end
       end
 

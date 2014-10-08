@@ -17,7 +17,10 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         $scope.games = Game.allGames();
     });
 
-    $scope.gameGoingOn = Game.resource.query({finished:'0'});
+    $scope.gameGoingOn = Game.activeGames();
+    $scope.$on('active-games-refreshed', function(event, args) {
+        $scope.gameGoingOn = Game.activeGames();  
+    });
 
     $scope.loading = false;
     $scope.$on('$routeChangeStart', function(scope, next, current) {
@@ -33,13 +36,9 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     Stream.onmessage(function(data) {
         if(data.id) {
             $scope.$broadcast('game-push-received', { receivedGame: data });
-            if(data.finished == 0) {
-                $scope.gameGoingOn[0] = data;
-                Game.refreshGames();
-                User.refreshUsers();
-            } else {
-                $scope.gameGoingOn[0] = null;
-            }
+            Game.refreshActiveGames();
+            Game.refreshGames();
+            User.refreshUsers();
         } else if(data.msg) {
             Alert.setAlert(data.msg);
         }
@@ -86,7 +85,8 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
             });
             newGame.$save(function(g, headers) {
                 Game.refreshGames();
-                $scope.gameGoingOn[0] = g;
+                Game.refreshActiveGames();
+                $scope.$broadcast('game-push-received', { receivedGame: g });
                 $location.path('games/'+g.id);
             });
         }, function(error) {
@@ -213,6 +213,7 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $l
     $scope.$emit('change-title', {title: 'Game'});
     $scope.game = Game.resource.get({gameId:$routeParams.gameId});
     $scope.chart = scoreChart.getChart();
+    $scope.gameGoingOn = Game.activeGames();
     $scope.rebuildChart = function() {
         scoreChart.rebuildChartConfig($scope.game.score_history, $scope.game.player_home.name, $scope.game.player_away.name);
     };
@@ -223,7 +224,7 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $l
                                          manual:$scope.game.manual});
         newGame.$save(function(g, headers) {
             Game.refreshGames();
-            $scope.gameGoingOn[0] = g;
+            Game.refreshActiveGames();
             $location.path('games/'+g.id);
         });
     };
@@ -231,6 +232,10 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $l
         console.log(team);
         $http.get('manual_score/'+$scope.game.id+'/'+team);
     }
+
+    $scope.$on('active-games-refreshed', function(event, args) {
+        $scope.gameGoingOn = Game.activeGames();  
+    });
 
     /**
     * Stream

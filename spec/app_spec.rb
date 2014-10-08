@@ -37,7 +37,7 @@ describe "DigiFoosball App" do
 
     context "when params[:finished] = 1" do
       it "returns all finished games" do
-        get '/api/games', :finsihed => 1
+        get '/api/games', :finished => 1
         expect(last_response.body).to eq Game.where(finished:1).to_json(
           :include => [:player_home, :player_away]
         )
@@ -58,6 +58,15 @@ describe "DigiFoosball App" do
       expect(last_response.status).to eq 201
       new_user = JSON.parse(last_response.body)
       expect(new_user["id"]).to be > 0
+    end
+  end
+
+  describe "post '/api/games'" do
+    it "creates a game and returns the game object" do
+      post '/api/games', attributes_for(:game).to_json, {"CONTENT_TYPE" => 'application/json'}
+      expect(last_response.status).to eq 201
+      new_game = JSON.parse(last_response.body)
+      expect(new_game["id"]).to be > 0
     end
   end
 
