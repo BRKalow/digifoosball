@@ -4,7 +4,7 @@
 
 var digiFoosballControllers = angular.module('digiFoosballControllers', []);
 
-digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game, Alert, Stream) {
+digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $modal, $location, User, Game, Alert, Stream, Modals) {
     $scope.title = "Dashboard";
     $scope.$on('change-title', function(event, args) {
         $scope.title = args.title;
@@ -36,7 +36,9 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     Stream.onmessage(function(data) {
         if(data.id) {
             $scope.$broadcast('game-push-received', { receivedGame: data });
-            Game.refreshActiveGames();
+            if(data.finished == 1) {
+                Game.refreshActiveGames();
+            }
             Game.refreshGames();
             User.refreshUsers();
         } else if(data.msg) {
@@ -55,6 +57,9 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
     */
     $scope.users = User.allUsers();
     $scope.hasModalOpen = false;
+    $scope.$on('modal-closed', function() {
+        $scope.hasModalOpen = false;
+    });
     $scope.newGameModal = function() {
 
         $scope.hasModalOpen = true;
@@ -68,30 +73,8 @@ digiFoosballControllers.controller('MainCtrl', function($scope, $cookieStore, $m
         });
 
         modalInstance.result.then(function(values) {
-            if(values[2]) values[2] = 1;
-            if(!values[2]) values[2] = 0;
-            if(values[3] === false) values[3] = 1;
-            if(values[3] === true) values[3] = 0;
-            $scope.hasModalOpen = false;
-            if(values[0].id == values[1].id) {
-                Alert.setAlert('You can\'t create a game with one person!');
-                return;
-            }
-            var newGame = new Game.resource({
-                player_home_id:values[0].id,
-                player_away_id:values[1].id,
-                league_game:values[2],
-                manual:values[3]
-            });
-            newGame.$save(function(g, headers) {
-                Game.refreshGames();
-                Game.refreshActiveGames();
-                $scope.$broadcast('game-push-received', { receivedGame: g });
-                $location.path('games/'+g.id);
-            });
-        }, function(error) {
-            $scope.hasModalOpen = false;
-        });
+            Modals.newGame.success(values)
+        }, function(error) { Modals.newGame.error(error) });
     };
 
     $scope.newPlayerModal = function() {
@@ -209,7 +192,7 @@ digiFoosballControllers.controller('GameListCtrl', function($scope, Game) {
     });
 });
 
-digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $location,Game, scoreChart, $http) {
+digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $location, Game, scoreChart, $http) {
     $scope.$emit('change-title', {title: 'Game'});
     $scope.game = Game.resource.get({gameId:$routeParams.gameId});
     $scope.chart = scoreChart.getChart();
@@ -229,7 +212,6 @@ digiFoosballControllers.controller('GameCtrl', function($scope, $routeParams, $l
         });
     };
     $scope.incrementScore = function(team) {
-        console.log(team);
         $http.get('manual_score/'+$scope.game.id+'/'+team);
     }
 

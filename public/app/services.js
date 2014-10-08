@@ -257,3 +257,36 @@ digiFoosballServices.factory('rankingChart', function() {
     };
 });
 
+digiFoosballServices.factory('Modals', ['Game', 'Alert', '$rootScope', '$location', function(Game, Alert, $rootScope, $location) {
+    return {
+        newGame: {
+            success: function(values) {
+                if(values[2]) values[2] = 1;
+                if(!values[2]) values[2] = 0;
+                if(values[3] === false) values[3] = 1;
+                if(values[3] === true) values[3] = 0;
+                $rootScope.$broadcast('modal-closed', {});
+                if(values[0].id == values[1].id) {
+                    Alert.setAlert('You can\'t create a game with one person!');
+                    return;
+                }
+                var newGame = new Game.resource({
+                    player_home_id:values[0].id,
+                    player_away_id:values[1].id,
+                    league_game:values[2],
+                    manual:values[3]
+                });
+                newGame.$save(function(g, headers) {
+                    Game.refreshGames();
+                    Game.refreshActiveGames();
+                    $rootScope.$broadcast('game-push-received', { receivedGame: g });
+                    $location.path('games/'+g.id);
+                });
+            },
+            error: function(error) {
+                $rootScope.$broadcast('modal-closed');
+            }
+        }
+    };
+}]);
+
