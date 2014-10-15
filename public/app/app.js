@@ -50,3 +50,6 @@ app.config(['$routeProvider', '$locationProvider',
       $locationProvider.html5Mode(true);
       $locationProvider.hashPrefix('!');
 }]);
+
+var digiFoosballControllers = angular.module('digiFoosballControllers', []);
+var digiFoosballServices = angular.module('digiFoosballServices', ['ngResource']);

@@ -19,6 +19,7 @@ module DigiFoosball
     register Sinatra::DeviceCloud
 
     helpers Sinatra::ErrorHelpers
+    helpers Sinatra::Assets
 
     def push_stream(data)
       @@connections.each { |out| out << "data: #{data}\n\n" }

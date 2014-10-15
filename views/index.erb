@@ -11,17 +11,16 @@
   <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/dashboard/dashboard.css">
 
-  <script type="text/javascript" src="app/bower_components/angular/angular.min.js"></script>
-  <script type="text/javascript" src="js/angular-cookies.js"></script>
-  <script type="text/javascript" src="js/ng-bootstrap-tpls.min.js"></script>
-  <script type="text/javascript" src="app/bower_components/angular-route/angular-route.min.js"></script>
-  <script type="text/javascript" src="app/bower_components/angular-resource/angular-resource.min.js"></script>
-  <script type='text/javascript' src='app/bower_components/d3/d3.min.js'></script>
-  <script type='text/javascript' src='app/bower_components/angular-charts/dist/angular-charts.min.js'></script>
-  <script type="text/javascript" src="app/app.js"></script>
-  <script type="text/javascript" src="app/services.js"></script>
-  <script type="text/javascript" src="app/directives.js"></script>
-  <script type="text/javascript" src="app/controllers.js"></script>
+<%= include_js_files([
+        'app/bower_components/angular/angular.min.js',
+        'js/angular-cookies.js',
+        'js/ng-bootstrap-tpls.min.js',
+        'app/bower_components/angular-route/angular-route.min.js',
+        'app/bower_components/angular-resource/angular-resource.min.js',
+        'app/bower_components/d3/d3.min.js',
+        'app/bower_components/angular-charts/dist/angular-charts.min.js',
+        'app/app.js'
+    ]) %>
 </head>
 <body>
   <div id="page-wrapper" ng-class="{'active': toggle, 'open-modal': hasModalOpen}" ng-cloak>
@@ -103,5 +102,6 @@
   <alert ng-repeat="alert in alerts" close="closeAlert()">
     {{ alert.msg }}
   </alert>
+<%= include_js_folders(['app/services', 'app/directives', 'app/controllers']) %>
 </body>
 </html>
