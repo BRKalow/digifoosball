@@ -7,7 +7,7 @@
         "Foosball"
     ],
     "repository": "https://github.com/BRKalow/digifoosball",
-    "logo": "https://github.com/BRKalow/digifoosball/blob/master/public/img/logo.png",
+    "logo": "http://www.unixstickers.com/image/cache/data/stickers/ruby/ruby.sh-600x600.png",
     "success_url": "/",
     "scripts": {
         "postdeploy": "bundle exec rake db:migrate"
