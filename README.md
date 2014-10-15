@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/BRKalow/digifoosball.svg)](https://travis-ci.org/BRKalow/digifoosball)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/BRKalow/digifoosball)
 
 Digi Foosball
 =============
