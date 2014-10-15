@@ -7,6 +7,9 @@ A web application that communicates with Digi Device Cloud to retrieve
 information from a device rigged up to a foosball table. Tracks stats and
 scores for foosball games.
 
+There is also support for a 'manual scoring' mode which does not require
+any additional hardware or Device Cloud interaction.
+
 Browser Support
 ---------------
 
@@ -49,6 +52,19 @@ See the [Heroku configuration page](https://devcenter.heroku.com/articles/config
 for details on how to set this up. After you have set the configuration variables,
 run `git push heroku master` and navigate to the application's Heroku address.
 
+Testing
+-------
+
+To run the test suite, execute the following commands:
+
+```
+$ rake db:test:prepare && rspec
+```
+
+This will set up a test database and execute all of the tests.
+The test coverage is currently limited and cannot be relied upon to detect any
+breaking changes made by modifying the code base.
+
 Technologies
 ------------
 
@@ -56,7 +72,7 @@ The Ruby-based Sinatra micro web framework is used as a server-side back-end,
 which interfaces with an SQLite3 database and provides an API through which the
  AngularJS based front-end can retrieve data. A Device Cloud Monitor is used to
  send information to the application via HTTP requests, and the EventSource
- protocol used to pipe live updates from the server-side to the client-side.
+ protocol is used to pipe live updates from the server-side to the client-side.
 
 Hardware
 --------
@@ -67,6 +83,9 @@ An Arduino with infrared LEDs and sensors is used to track goals, and an XBee
 
 Credits
 -------
+
+Inspired and based off of the [Digital Foosball](https://github.com/sinnerschrader/digitalfoosball)
+ project by SinnerSchrader.
 
 Created by the Summer 2014 Digi Student Engineers team:
 
