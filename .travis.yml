@@ -4,7 +4,7 @@ rvm:
 deploy:
   provider: heroku
   api_key:
-    secure: Vs5KXbmrwh7chBaT4URLrppuGnturlUKDL4fNvSyLI31vzrHarIYPh/D+LFdOZ2IRim9AiYIBbC/HxWgMH3SgteK5gJfnz8VrH1Tsb58AAOSquv97Ed4goIBROy1BUX+Kf32rqkqYmrdttpHyjspStpagjPFwSau4uQKLUKucPc=
+    secure: SwVrny/w+HD2ziBqMVSGngt4HIHf3WRUF+WkW854JVY/VmFJst+6ce1gWfNvMXjm+WlRo9Zb3/CIn7JRyU9OuFKg/QbhIZWr7kybyKblYfG0BcqE2oOFSIqAOccwtqqJCnT1BGwfrRzh7hrlRCrrjfhp+HMMKoxNld863C8/AYw=
   strategy: git
   app: digi-foosball
   on:
