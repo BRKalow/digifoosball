@@ -1,0 +1,32 @@
+{
+    "name": "Digi Foosball",
+    "description": "Automatically track scores and keep track of Foosball stats.",
+    "keywords": [
+        "AngularJS",
+        "Sinatra",
+        "Foosball"
+    ],
+    "repository": "https://github.com/BRKalow/digifoosball",
+    "logo": "https://github.com/BRKalow/digifoosball/blob/master/public/img/logo.png",
+    "success_url": "/",
+    "scripts": {
+        "postdeploy": "bundle exec rake db:migrate"
+    },
+    "env": {
+        "dc_username" {
+            "description": "Your Device Cloud username"
+        },
+        "dc_password" {
+            "description": "Your Device Cloud password"
+        },
+        "dc_device_id" {
+            "description": "Your scoring device ID, as found in Device Cloud"
+        },
+        "dc_home_input" {
+            "description": "The digital input ID of the home goal"
+        },
+        "dc_away_input" {
+            "description": "The digital input ID of the away goal"
+        }
+    }
+}
