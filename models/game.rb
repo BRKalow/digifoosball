@@ -19,6 +19,10 @@ class Game < ActiveRecord::Base
     self.manual ||= 0
   end
 
+  def self.by_player(user_id)
+    where("player_home_id = :u_id OR player_away_id = :u_id", u_id: user_id)
+  end
+
   def game_finished?
     self.score_home >= 5 || self.score_away >= 5
   end

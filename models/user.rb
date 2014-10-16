@@ -1,12 +1,11 @@
 class User < ActiveRecord::Base
-  has_many :home_games, :class_name => 'Game', :foreign_key => 'player_home_id'
-  has_many :away_games, :class_name => 'Game', :foreign_key => 'player_away_id'
+  has_many :games
 
   after_initialize :set_defaults
   after_create :create_gravatar_hash
 
   def games
-    home_games + away_games
+    Game.by_player(self.id)  
   end
 
   def set_defaults
